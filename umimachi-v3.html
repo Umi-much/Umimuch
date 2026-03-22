@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>"うみまち" — 宇美町地域ポータル</title>
+<meta name="description" content="宇美町のすべてがここにある。グルメ・観光・イベント・移住・行政情報を網羅した地域ポータルサイト。">
+<meta property="og:title" content='"うみまち" — 宇美町地域ポータル'>
+<meta property="og:description" content="宇美八幡宮の街から、三郡山の麓まで。宇美町に関わるすべての人のための入口。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2a6e3f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=Shippori+Mincho:wght@400;700;800&family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+/* ===================================================
+   TOKENS
+=================================================== */
+:root {
+  --g:#2a6e3f; --gl:#4a9a5f; --g10:rgba(42,110,63,.1);
+  --b:#1a5a8a; --e:#b87820; --el:#d4a035;
+  --cream:#fdf8f0; --warm:#fefcf8;
+  --dark:#1e2a1a; --mid:#5a6650; --light:#9aaa90;
+  --border:#e0d8c8; --border2:#f0ead8;
+  --serif:'Shippori Mincho','DM Serif Display',serif;
+  --sans:'Zen Kaku Gothic New',sans-serif;
+  --nav-h:60px;
+  --shadow:0 4px 20px rgba(0,0,0,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{background:var(--warm);color:var(--dark);font-family:var(--sans);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent;}
+button{font-family:var(--sans);-webkit-tap-highlight-color:transparent;cursor:pointer;border:none;}
+img{max-width:100%;display:block;}
+
+/* ===================================================
+   UTILITIES
+=================================================== */
+.u-label{font-size:10px;letter-spacing:.22em;font-weight:700;color:var(--e);display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.u-label::after{content:'';width:36px;height:1px;background:var(--el);}
+.u-title{font-family:var(--serif);font-size:clamp(22px,3.5vw,40px);font-weight:800;line-height:1.25;color:var(--dark);margin-bottom:10px;}
+.u-desc{font-size:14px;line-height:1.85;color:var(--mid);}
+.u-more{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--g);display:inline-flex;align-items:center;gap:6px;transition:gap .2s;cursor:pointer;}
+.u-more:hover{gap:10px;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:3px;font-size:13px;font-weight:700;letter-spacing:.07em;transition:all .2s;cursor:pointer;font-family:var(--sans);}
+.btn-g{background:var(--g);color:#fff;border:none;}.btn-g:hover{background:var(--gl);}
+.btn-e{background:var(--e);color:#fff;border:none;}.btn-e:hover{background:var(--el);}
+.btn-o{background:transparent;color:var(--g);border:1.5px solid var(--g);}.btn-o:hover{background:var(--g);color:#fff;}
+.btn-w{background:#fff;color:var(--g);border:none;}.btn-w:hover{opacity:.9;}
+.btn-line{background:#06C755;color:#fff;border:none;}.btn-line:hover{opacity:.9;}
+
+.tag{display:inline-flex;align-items:center;font-size:10px;font-weight:700;letter-spacing:.07em;padding:3px 9px;border-radius:20px;}
+.tg{background:#dff0e8;color:var(--g);}
+.te{background:#f5ecd8;color:var(--e);}
+.tb{background:#ddeaf8;color:var(--b);}
+.tp{background:#f0e0f5;color:#7a3a9a;}
+.ty{background:#fdf0d0;color:#8a6010;}
+
+/* ===================================================
+   NAV
+=================================================== */
+#nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);background:rgba(254,252,248,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
+.nav-logo{font-family:var(--serif);font-size:19px;font-weight:800;color:var(--g);cursor:pointer;letter-spacing:.01em;}
+.nav-pc{display:flex;gap:2px;list-style:none;}
+.nav-pc a{font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--mid);padding:7px 11px;border-radius:3px;transition:all .18s;cursor:pointer;}
+.nav-pc a:hover,.nav-pc a.on{color:var(--g);background:var(--g10);}
+.nav-pc .cta{background:var(--g);color:#fff!important;}
+.nav-pc .cta:hover{background:var(--gl)!important;}
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;padding:8px;}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:all .28s;}
+.nav-ham.on span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-ham.on span:nth-child(2){opacity:0;}
+.nav-ham.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.drawer-bg{display:none;position:fixed;inset:0;z-index:290;background:rgba(30,42,26,.5);}
+.drawer-bg.on{display:block;}
+.drawer{position:fixed;top:var(--nav-h);left:0;right:0;z-index:295;background:var(--warm);border-bottom:2px solid var(--border);transform:translateY(-105%);transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:var(--shadow);}
+.drawer.on{transform:translateY(0);}
+.drawer-head{padding:14px 20px;border-bottom:1px solid var(--border);font-family:var(--serif);font-size:17px;font-weight:800;color:var(--g);}
+.drawer a{display:flex;align-items:center;gap:12px;padding:14px 20px;font-size:14px;font-weight:700;color:var(--dark);border-bottom:1px solid var(--border2);transition:background .15s;cursor:pointer;}
+.drawer a:hover,.drawer a.on{background:var(--cream);color:var(--g);}
+.drawer-em{font-size:18px;width:28px;text-align:center;}
+.drawer-cta{background:var(--g)!important;color:#fff!important;margin:12px 20px;border-radius:3px;border-bottom:none!important;justify-content:center;}
+
+/* ===================================================
+   PAGE SYSTEM
+=================================================== */
+.pg{display:none;min-height:100vh;padding-top:var(--nav-h);}
+.pg.on{display:block;}
+
+/* ===================================================
+   TICKER
+=================================================== */
+.ticker{background:var(--g);color:#fff;padding:10px 0;overflow:hidden;white-space:nowrap;}
+.ticker-in{display:inline-flex;gap:60px;animation:tick 30s linear infinite;}
+.ticker-item{font-size:12px;letter-spacing:.06em;display:flex;align-items:center;gap:10px;}
+.ticker-item::before{content:'◆';font-size:7px;color:rgba(255,255,255,.45);}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===================================================
+   PAGE HEADER (サブページ共通)
+=================================================== */
+.ph{background:var(--cream);border-bottom:1px solid var(--border);padding:36px 0 28px;}
+.ph-flex{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+
+/* ===================================================
+   FILTER / CHIPS
+=================================================== */
+.filter-bar{background:#fff;border:1px solid var(--border);border-radius:3px;padding:14px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px;}
+.fl{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--mid);white-space:nowrap;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{font-size:11px;font-weight:600;padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;transition:all .18s;color:var(--mid);background:#fff;}
+.chip:hover,.chip.on{background:var(--g);color:#fff;border-color:var(--g);}
+
+/* ===================================================
+   TOP: HERO
+=================================================== */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - var(--nav-h));background:var(--warm);}
+.hero-l{padding:56px 48px 56px 56px;display:flex;flex-direction:column;justify-content:center;background:var(--warm);}
+.hero-eye{font-size:10px;letter-spacing:.22em;font-weight:700;color:var(--e);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.hero-eye::before{content:'';width:32px;height:1px;background:var(--e);}
+.hero-h1{font-family:var(--serif);font-size:clamp(42px,5.5vw,74px);font-weight:800;line-height:1.08;color:var(--dark);margin-bottom:8px;}
+.hero-h1 em{color:var(--g);font-style:normal;}
+.hero-sub{font-family:'DM Serif Display',serif;font-style:italic;font-size:16px;color:var(--el);margin-bottom:22px;}
+.hero-body{font-size:14px;line-height:1.9;color:var(--mid);max-width:400px;margin-bottom:32px;}
+.hero-acts{display:flex;gap:10px;flex-wrap:wrap;}
+.hero-r{position:relative;overflow:hidden;background:linear-gradient(140deg,#5aaa6a 0%,#2a6e3f 60%,#1a5230 100%);}
+.topo{position:absolute;inset:0;opacity:.12;}
+.hero-badge{position:absolute;top:24px;right:20px;background:var(--el);color:#fff;font-size:9px;letter-spacing:.16em;font-weight:700;padding:5px 12px;border-radius:2px;}
+.hero-stats{position:absolute;bottom:24px;left:20px;right:20px;display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.stat{background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:13px 14px;}
+.stat-n{font-family:var(--serif);font-size:21px;font-weight:800;color:#fff;line-height:1;margin-bottom:4px;}
+.stat-l{font-size:10px;color:rgba(255,255,255,.72);}
+
+/* TOP: カテゴリ */
+.cats{padding:52px 0;background:var(--cream);}
+.cats-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);background:var(--border);gap:1px;border-radius:3px;overflow:hidden;border:1px solid var(--border);}
+.cat-item{background:#fff;padding:26px 20px;cursor:pointer;transition:all .22s;display:block;position:relative;overflow:hidden;}
+.cat-item::after{content:'→';position:absolute;bottom:14px;right:16px;font-size:13px;color:var(--border);transition:all .22s;}
+.cat-item:hover{background:var(--g);}
+.cat-item:hover .ci,.cat-item:hover .cn,.cat-item:hover .cs{color:#fff!important;}
+.cat-item:hover::after{color:rgba(255,255,255,.65);right:12px;}
+.ci{font-size:24px;margin-bottom:10px;display:block;}
+.cn{font-size:13px;font-weight:700;margin-bottom:3px;color:var(--dark);}
+.cs{font-size:11px;color:var(--mid);line-height:1.4;}
+
+/* TOP: NEWS + EVENTS */
+.ne{display:grid;grid-template-columns:1fr 1fr;}
+.ne-news{background:#fff;padding:48px;border-right:1px solid var(--border);}
+.ne-ev{background:var(--warm);padding:48px;}
+.ni{display:grid;grid-template-columns:60px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--border2);cursor:pointer;transition:opacity .18s;}
+.ni:hover{opacity:.7;}
+.ni-date{font-family:var(--serif);font-size:11px;color:var(--e);line-height:1.3;}
+.ni-date b{display:block;font-size:19px;font-weight:800;}
+.ni-title{font-size:13px;font-weight:700;line-height:1.6;color:var(--dark);margin-top:4px;}
+.evlist{margin-top:24px;display:flex;flex-direction:column;gap:10px;}
+.evc{background:#fff;border:1px solid var(--border);border-radius:3px;padding:16px;display:grid;grid-template-columns:48px 1fr;gap:12px;cursor:pointer;transition:all .18s;}
+.evc:hover{border-color:var(--g);box-shadow:0 2px 12px rgba(42,110,63,.1);}
+.evc-cal{border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px;}
+.evc-cal .m{font-size:9px;letter-spacing:.08em;font-weight:700;color:#fff;}
+.evc-cal .d{font-family:var(--serif);font-size:20px;font-weight:800;color:#fff;line-height:1;}
+.evc-t{font-size:13px;font-weight:700;margin-bottom:3px;}
+.evc-m{font-size:11px;color:var(--mid);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* TOP: PICKUP */
+.pickup{padding:24px 0;background:var(--cream);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.pickup-label{font-size:9px;letter-spacing:.18em;font-weight:700;color:var(--light);margin-bottom:9px;}
+.pickup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.pkc{background:#fff;border:1px solid var(--border);border-radius:3px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer;transition:border-color .18s;}
+.pkc:hover{border-color:var(--g);}
+.pkc-th{width:46px;height:46px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.pkc-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.pkc-sub{font-size:11px;color:var(--mid);line-height:1.45;}
+.pkc-badge{font-size:9px;letter-spacing:.08em;border:1px solid var(--border);padding:2px 5px;border-radius:2px;color:var(--light);align-self:flex-start;white-space:nowrap;}
+
+/* TOP: スポット */
+.spots-s{padding:52px 0;background:#fff;}
+.spots-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;}
+.sg{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:190px 190px;gap:10px;}
+.sc{position:relative;overflow:hidden;cursor:pointer;border-radius:3px;}
+.sc:first-child{grid-row:span 2;}
+.sc-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:70px;opacity:.28;}
+.sc:first-child .sc-bg{font-size:130px;}
+.sc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,50,20,.72) 0%,transparent 60%);transition:background .25s;}
+.sc:hover .sc-ov{background:linear-gradient(to top,rgba(42,110,63,.88) 0%,rgba(42,110,63,.3) 65%);}
+.sc-info{position:absolute;bottom:0;left:0;right:0;padding:16px;}
+.sc-tag{font-size:9px;letter-spacing:.12em;font-weight:700;color:rgba(255,255,255,.78);margin-bottom:4px;}
+.sc-name{font-family:var(--serif);font-size:16px;font-weight:700;color:#fff;line-height:1.3;}
+.sc:first-child .sc-name{font-size:22px;}
+
+/* TOP: 事業者 */
+.biz{padding:52px 0;background:var(--cream);}
+.biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
+.biz-card{background:#fff;border:1px solid var(--border);border-radius:3px;padding:32px 26px;transition:all .22s;cursor:pointer;}
+.biz-card:hover{border-color:var(--g);box-shadow:var(--shadow);transform:translateY(-3px);}
+.biz-n{font-family:'DM Serif Display',serif;font-style:italic;font-size:40px;color:var(--border2);line-height:1;margin-bottom:14px;}
+.biz-ic{font-size:24px;margin-bottom:10px;display:block;}
+.biz-t{font-size:14px;font-weight:700;margin-bottom:7px;}
+.biz-d{font-size:12px;line-height:1.8;color:var(--mid);}
+.biz-cta{margin-top:14px;font-size:12px;font-weight:700;color:var(--g);display:flex;align-items:center;gap:5px;transition:gap .18s;}
+.biz-card:hover .biz-cta{gap:9px;}
+
+/* TOP: 広告 */
+.adsec{background:#fdf3e0;border-top:2px solid var(--el);padding:56px 0;}
+.adsec-in{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.adsec-t{font-family:var(--serif);font-size:clamp(24px,3.5vw,36px);font-weight:800;line-height:1.3;margin-bottom:12px;}
+.adsec-d{font-size:14px;line-height:1.85;color:var(--mid);margin-bottom:24px;}
+.ad-mets{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.adm{background:#fff;border:1px solid var(--border);border-radius:3px;padding:20px;}
+.adm-n{font-family:var(--serif);font-size:26px;font-weight:800;color:var(--e);margin-bottom:3px;}
+.adm-l{font-size:11px;color:var(--mid);}
+
+/* ===================================================
+   PAGE: GOURMET
+=================================================== */
+.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.shop-card{background:#fff;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:22px;cursor:pointer;transition:background .18s;}
+.shop-card:hover{background:var(--cream);}
+.shop-card:nth-child(3n){border-right:none;}
+.shop-thumb{height:110px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:12px;}
+.shop-name{font-family:var(--serif);font-size:16px;font-weight:700;margin-bottom:3px;}
+.shop-area{font-size:11px;color:var(--mid);margin-bottom:7px;}
+.shop-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px;}
+.shop-desc{font-size:12px;line-height:1.7;color:var(--mid);}
+.shop-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border2);flex-wrap:wrap;gap:4px;}
+.shop-hours{font-size:11px;color:var(--mid);}
+.shop-rating{font-size:12px;font-weight:700;color:var(--e);}
+.load-more{text-align:center;padding:32px;background:var(--cream);border-top:1px solid var(--border);}
+
+/* ===================================================
+   PAGE: EVENTS
+=================================================== */
+.cal-nav{display:flex;align-items:center;gap:12px;padding:14px 24px;background:#fff;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.cal-month-title{font-family:var(--serif);font-size:22px;font-weight:800;flex:1;}
+.cal-btn{width:34px;height:34px;border:1px solid var(--border);background:#fff;border-radius:3px;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .18s;}
+.cal-btn:hover{background:var(--g);color:#fff;border-color:var(--g);}
+.cal-wrap{overflow-x:auto;background:var(--warm);}
+.cal-inner{min-width:560px;}
+.cal-hrow{display:grid;grid-template-columns:repeat(7,1fr);border-left:1px solid var(--border);border-top:1px solid var(--border);}
+.cal-dh{padding:9px;text-align:center;font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--mid);background:var(--cream);border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.cal-body{display:grid;grid-template-columns:repeat(7,1fr);border-left:1px solid var(--border);}
+.cal-cell{min-height:80px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:6px;background:#fff;cursor:pointer;transition:background .15s;}
+.cal-cell:hover{background:var(--cream);}
+.cal-cell.other{background:#fafaf8;}
+.cal-cell.today{background:#edf8f1;}
+.cal-dn{font-size:11px;font-weight:700;color:var(--mid);margin-bottom:3px;}
+.cal-cell.today .cal-dn{background:var(--g);color:#fff;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.cal-dot{font-size:10px;padding:2px 5px;border-radius:2px;margin-bottom:2px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ev-list{padding:32px 0;}
+.ev-item{display:grid;grid-template-columns:60px 1fr auto;gap:18px;padding:20px 0;border-bottom:1px solid var(--border);align-items:start;}
+.ev-cal{border-radius:3px;padding:9px 7px;text-align:center;}
+.ev-cal .m{font-size:9px;letter-spacing:.08em;font-weight:700;color:#fff;}
+.ev-cal .d{font-family:var(--serif);font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.ev-title{font-size:14px;font-weight:700;margin-bottom:5px;}
+.ev-meta{font-size:11px;color:var(--mid);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:5px;}
+.ev-desc{font-size:12px;line-height:1.75;color:var(--mid);}
+
+/* ===================================================
+   PAGE: SPOTS
+=================================================== */
+.spots-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.spt-card{position:relative;overflow:hidden;cursor:pointer;height:250px;border-right:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2);}
+.spt-card:nth-child(3n){border-right:none;}
+.spt-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:92px;opacity:.3;}
+.spt-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,50,20,.75) 0%,transparent 60%);transition:background .25s;}
+.spt-card:hover .spt-ov{background:linear-gradient(to top,rgba(42,110,63,.9) 0%,rgba(42,110,63,.3) 65%);}
+.spt-info{position:absolute;bottom:0;left:0;right:0;padding:18px;}
+.spt-tag{font-size:9px;letter-spacing:.12em;font-weight:700;color:rgba(255,255,255,.78);margin-bottom:4px;}
+.spt-name{font-family:var(--serif);font-size:18px;font-weight:700;color:#fff;line-height:1.3;}
+.spt-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px;}
+.spot-detail{padding:52px 0;background:var(--cream);}
+.sd-grid{display:grid;grid-template-columns:1fr 320px;gap:44px;align-items:start;margin-top:24px;}
+.sd-body{font-size:14px;line-height:2;color:var(--mid);}
+.sd-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+.info-box{background:#fff;border:1px solid var(--border);border-radius:3px;padding:22px;margin-bottom:12px;}
+.info-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border2);font-size:13px;}
+.info-row:last-child{border-bottom:none;}
+.info-k{font-weight:700;min-width:68px;flex-shrink:0;}
+.info-v{color:var(--mid);}
+.map-box{background:var(--cream);border:1px solid var(--border);border-radius:3px;overflow:hidden;}
+.map-box iframe{width:100%;height:200px;border:none;display:block;}
+.map-label{padding:9px 13px;font-size:11px;color:var(--mid);}
+
+/* ===================================================
+   PAGE: MIGRATION
+=================================================== */
+.mig-hero{background:var(--g);padding:56px 0;}
+.mig-in{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;}
+.mig-h{font-family:var(--serif);font-size:clamp(26px,4vw,42px);font-weight:800;color:#fff;line-height:1.25;margin-bottom:12px;}
+.mig-sub{font-size:14px;color:rgba(255,255,255,.82);line-height:1.9;margin-bottom:22px;}
+.mig-acts{display:flex;gap:10px;flex-wrap:wrap;}
+.mig-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mstat{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);border-radius:3px;padding:18px;}
+.mstat-n{font-family:var(--serif);font-size:26px;font-weight:800;color:#fff;margin-bottom:3px;}
+.mstat-l{font-size:11px;color:rgba(255,255,255,.7);}
+.steps{padding:52px 0;}
+.step-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:26px;}
+.step{background:#fff;padding:28px 22px;}
+.step-n{font-family:'DM Serif Display',serif;font-style:italic;font-size:42px;color:var(--border2);line-height:1;margin-bottom:12px;}
+.step-ic{font-size:24px;margin-bottom:9px;display:block;}
+.step-t{font-size:13px;font-weight:700;margin-bottom:5px;}
+.step-d{font-size:12px;line-height:1.8;color:var(--mid);}
+.support-sec{padding:0 0 52px;}
+.sup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;}
+.sup{background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:26px;}
+.sup-ic{font-size:26px;margin-bottom:11px;display:block;}
+.sup-t{font-size:13px;font-weight:700;margin-bottom:6px;}
+.sup-d{font-size:12px;line-height:1.8;color:var(--mid);}
+.sup-amt{margin-top:9px;font-size:12px;font-weight:700;color:var(--g);}
+.voices{background:var(--cream);border-top:1px solid var(--border);padding:52px 0;}
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px;}
+.voice{background:#fff;border:1px solid var(--border);border-radius:3px;padding:22px;}
+.voice-q{font-size:13px;line-height:1.85;color:var(--mid);font-style:italic;padding-left:11px;border-left:3px solid var(--el);margin-bottom:12px;}
+.voice-p{display:flex;gap:9px;align-items:center;}
+.voice-av{width:36px;height:36px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.voice-nm{font-size:13px;font-weight:700;}
+.voice-at{font-size:10px;color:var(--mid);}
+
+/* ===================================================
+   PAGE: SERVICES
+=================================================== */
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid var(--border);border-top:1px solid var(--border);}
+.svc-item{padding:26px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff;cursor:pointer;transition:background .18s;display:block;}
+.svc-item:hover{background:var(--cream);}
+.svc-ic{font-size:24px;margin-bottom:11px;display:block;}
+.svc-nm{font-size:13px;font-weight:700;margin-bottom:4px;}
+.svc-d{font-size:11px;line-height:1.6;color:var(--mid);}
+.svc-arr{font-size:11px;color:var(--light);margin-top:7px;}
+
+.line-links{padding:52px 0;}
+.llabel{font-size:9px;letter-spacing:.18em;font-weight:700;color:var(--light);margin-bottom:8px;}
+.ll-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px;}
+.ll-card{background:#fff;border:1px solid var(--border);border-radius:3px;padding:18px;display:flex;gap:12px;align-items:center;cursor:pointer;transition:all .18s;}
+.ll-card:hover{border-color:#06C755;box-shadow:0 2px 10px rgba(6,199,85,.12);}
+.ll-ic{width:46px;height:46px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.ll-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.ll-sub{font-size:11px;color:var(--mid);line-height:1.45;}
+.ll-badge{font-size:9px;background:#06C755;color:#fff;padding:2px 6px;border-radius:20px;margin-left:4px;vertical-align:middle;}
+
+.faq-sec{padding:52px 0;border-top:1px solid var(--border);}
+.faq-list{margin-top:22px;border:1px solid var(--border);border-radius:3px;overflow:hidden;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-item:last-child{border-bottom:none;}
+.faq-q{padding:16px 22px;font-size:14px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;transition:background .15s;gap:12px;}
+.faq-q:hover{background:var(--cream);}
+.faq-ic{font-size:18px;color:var(--g);flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-ic{transform:rotate(45deg);}
+.faq-a{display:none;padding:0 22px 16px;font-size:13px;line-height:1.85;color:var(--mid);background:#fff;}
+.faq-item.open .faq-a{display:block;}
+
+/* ===================================================
+   FOOTER
+=================================================== */
+.ft{background:var(--cream);border-top:1px solid var(--border);padding:48px 0 28px;}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;}
+.ft-logo{font-family:var(--serif);font-size:18px;font-weight:800;color:var(--g);margin-bottom:12px;}
+.ft-catch{font-size:13px;line-height:1.85;color:var(--mid);margin-bottom:14px;}
+.ft-share{display:flex;gap:8px;}
+.ft-share a{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--border);transition:all .2s;}
+.ft-share a:hover{background:var(--g);color:#fff;transform:translateY(-2px);}
+.ft-h{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--dark);margin-bottom:12px;}
+.ft-ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.ft-ul a{font-size:13px;color:var(--mid);transition:color .15s;cursor:pointer;}
+.ft-ul a:hover{color:var(--g);}
+.ft-bottom{margin-top:32px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--light);}
+.ft-bottom a{color:var(--light);}
+
+/* ===================================================
+   RESPONSIVE ≤768px
+=================================================== */
+@media(max-width:768px){
+  .nav-pc{display:none;}
+  .nav-ham{display:flex;}
+  #nav{padding:0 14px;}
+  .nav-logo{font-size:17px;}
+
+  .hero{grid-template-columns:1fr;}
+  .hero-r{height:220px;order:-1;}
+  .hero-l{padding:32px 18px 28px;order:1;}
+  .hero-h1{font-size:clamp(32px,9vw,50px);}
+  .hero-sub{font-size:14px;margin-bottom:16px;}
+  .hero-body{font-size:13px;margin-bottom:22px;}
+  .hero-acts .btn-o{display:none;}
+  .hero-stats{bottom:14px;left:12px;right:12px;gap:7px;}
+  .stat-n{font-size:18px;}
+  .stat-l{font-size:9px;}
+
+  .wrap{padding:0 16px;}
+  .cats,.spots-s,.biz,.adsec,.mig-hero,.steps,.voices,.faq-sec,.line-links,.spot-detail{padding:40px 0!important;}
+  .ne-news,.ne-ev{padding:36px 18px;}
+  .ph{padding:28px 0 20px;}
+  .pickup{padding:18px 0;}
+  .support-sec{padding:0 0 40px;}
+
+  .ne{grid-template-columns:1fr;}
+  .ne-news{border-right:none;border-bottom:1px solid var(--border);}
+  .cat-grid{grid-template-columns:1fr 1fr;}
+  .pickup-grid,.biz-grid,.sup-grid,.voice-grid{grid-template-columns:1fr!important;}
+  .ad-mets{grid-template-columns:1fr 1fr;}
+  .adsec-in{grid-template-columns:1fr;gap:24px;}
+  .sg{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .sc:first-child{grid-row:span 1;grid-column:span 2;height:180px;}
+  .sc{height:140px;}
+  .sc-bg{font-size:56px;}
+  .sc:first-child .sc-bg{font-size:100px;}
+  .shop-grid{grid-template-columns:1fr;}
+  .shop-card{border-right:none!important;}
+  .spots-grid{grid-template-columns:1fr 1fr;}
+  .spt-card{height:170px;border-right:1px solid rgba(255,255,255,.2)!important;}
+  .spt-card:nth-child(2n){border-right:none!important;}
+  .sd-grid{grid-template-columns:1fr!important;gap:20px;}
+  .mig-in{grid-template-columns:1fr;gap:24px;}
+  .mig-stats{grid-template-columns:1fr 1fr;gap:8px;}
+  .step-grid{grid-template-columns:1fr 1fr;}
+  .svc-grid{grid-template-columns:1fr 1fr;}
+  .ll-grid{grid-template-columns:1fr;}
+  .ev-item{grid-template-columns:52px 1fr;}
+  .ev-item .btn-o{display:none;}
+  .ft-grid{grid-template-columns:1fr;}
+  .ft{padding:36px 0 22px;}
+  .ft-bottom{flex-direction:column;align-items:flex-start;gap:6px;}
+  .filter-bar{flex-direction:column;align-items:flex-start;gap:9px;}
+  .ph-flex{flex-direction:column;align-items:flex-start;gap:12px;}
+}
+@media(max-width:400px){
+  .spots-grid{grid-template-columns:1fr!important;}
+  .spt-card{height:160px;border-right:none!important;}
+  .step-grid{grid-template-columns:1fr!important;}
+  .svc-grid{grid-template-columns:1fr!important;}
+  .hero-h1{font-size:clamp(28px,10vw,38px);}
+  .cat-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================================================
+  NAV
+=================================================== -->
+<nav id="nav">
+  <div class="nav-logo" onclick="go('top')">"うみまち"</div>
+  <ul class="nav-pc">
+    <li><a onclick="go('top')" id="n-top" class="on">トップ</a></li>
+    <li><a onclick="go('gourmet')" id="n-gourmet">グルメ</a></li>
+    <li><a onclick="go('events')" id="n-events">イベント</a></li>
+    <li><a onclick="go('spots')" id="n-spots">観光</a></li>
+    <li><a onclick="go('migration')" id="n-migration">移住</a></li>
+    <li><a onclick="go('services')" id="n-services">行政・LINE</a></li>
+    <li><a class="cta">広告掲載</a></li>
+  </ul>
+  <button class="nav-ham" id="ham" aria-label="メニュー">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="drawer-bg" id="dbg"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">"うみまち"</div>
+  <a onclick="go('top')" id="d-top"><span class="drawer-em">🏠</span>トップ</a>
+  <a onclick="go('gourmet')" id="d-gourmet"><span class="drawer-em">🍽️</span>グルメ・お店</a>
+  <a onclick="go('events')" id="d-events"><span class="drawer-em">🎉</span>イベント</a>
+  <a onclick="go('spots')" id="d-spots"><span class="drawer-em">⛩️</span>観光スポット</a>
+  <a onclick="go('migration')" id="d-migration"><span class="drawer-em">🏡</span>移住ガイド</a>
+  <a onclick="go('services')" id="d-services"><span class="drawer-em">📋</span>行政・LINE</a>
+  <a class="drawer-cta"><span class="drawer-em">📣</span>広告掲載のご相談</a>
+</div>
+
+<!-- ===================================================
+  PAGE: TOP
+=================================================== -->
+<div class="pg on" id="pg-top">
+
+  <section class="hero">
+    <div class="hero-l">
+      <div class="hero-eye">FUKUOKA · KASУYA-GUN · UMI TOWN</div>
+      <h1 class="hero-h1">宇美町の<br>すべてが<br><em>ここにある。</em></h1>
+      <p class="hero-sub">Umi Town Community Portal</p>
+      <p class="hero-body">宇美八幡宮の街から、三郡山の麓まで。<br>生活・観光・イベント・移住情報——<br>宇美町に関わるすべての人のための入口。</p>
+      <div class="hero-acts">
+        <button class="btn btn-g" onclick="go('gourmet')">情報を探す</button>
+        <button class="btn btn-o" onclick="go('spots')">観光スポット →</button>
+      </div>
+    </div>
+    <div class="hero-r">
+      <svg class="topo" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,200 Q150,120 300,200 Q450,280 600,200" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M0,300 Q150,220 300,300 Q450,380 600,300" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M0,400 Q150,320 300,400 Q450,480 600,400" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M0,500 Q150,420 300,500 Q450,580 600,500" fill="none" stroke="white" stroke-width="1"/>
+        <circle cx="300" cy="350" r="80" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+        <circle cx="300" cy="350" r="140" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+        <text x="300" y="350" text-anchor="middle" dominant-baseline="middle" fill="rgba(255,255,255,.2)" font-size="11" letter-spacing="4" font-family="sans-serif">宇美町</text>
+      </svg>
+      <div class="hero-badge">FUKUOKA · KASUGA</div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">37,000</div><div class="stat-l">人口</div></div>
+        <div class="stat"><div class="stat-n">2,600年</div><div class="stat-l">宇美八幡宮の歴史</div></div>
+        <div class="stat"><div class="stat-n">60%</div><div class="stat-l">山林面積の割合</div></div>
+        <div class="stat"><div class="stat-n">15分</div><div class="stat-l">福岡空港から</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-in" id="ticker-content">
+      <!-- ▼▼▼ ティッカー：追加・編集はここ ▼▼▼ -->
+      <span class="ticker-item">🌸 宇美八幡宮 春の大祭 4月15日開催</span>
+      <span class="ticker-item">📢 のるーと宇美 新ルート追加のお知らせ</span>
+      <span class="ticker-item">🏔️ 三郡山ハイキングシーズン到来</span>
+      <span class="ticker-item">🏫 宇美町こども絵画教室「わくわく展」開催中</span>
+      <span class="ticker-item">💼 商工会 起業セミナー 参加者募集中</span>
+      <span class="ticker-item">💰 令和7年度 生活応援給付金（1万円）受付中</span>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+      <!-- JS が自動複製するので重複記載不要 -->
+    </div>
+  </div>
+
+  <section class="cats">
+    <div class="wrap">
+      <div class="cats-head">
+        <div><div class="u-label">CATEGORIES</div><h2 class="u-title">何を探していますか？</h2></div>
+        <span class="u-more" onclick="go('gourmet')">すべて見る →</span>
+      </div>
+      <div class="cat-grid">
+        <a class="cat-item" onclick="go('services')"><span class="ci">🏛️</span><div class="cn">行政・手続き</div><div class="cs">役場・証明書・補助金</div></a>
+        <a class="cat-item" onclick="go('gourmet')"><span class="ci">🍽️</span><div class="cn">グルメ・飲食</div><div class="cs">飲食店・テイクアウト</div></a>
+        <a class="cat-item" onclick="go('spots')"><span class="ci">⛩️</span><div class="cn">観光・神社</div><div class="cs">宇美八幡宮・登山</div></a>
+        <a class="cat-item" onclick="go('events')"><span class="ci">🎉</span><div class="cn">イベント・祭り</div><div class="cs">年間行事・地域イベント</div></a>
+        <a class="cat-item" onclick="go('migration')"><span class="ci">🏡</span><div class="cn">移住・定住</div><div class="cs">支援制度・空き家</div></a>
+        <a class="cat-item" onclick="go('services')"><span class="ci">👶</span><div class="cn">子育て・教育</div><div class="cs">保育・学校・習い事</div></a>
+        <a class="cat-item" onclick="go('services')"><span class="ci">💼</span><div class="cn">仕事・起業</div><div class="cs">求人・創業支援</div></a>
+        <a class="cat-item" onclick="go('services')"><span class="ci">🚌</span><div class="cn">交通・のるーと</div><div class="cs">バス・JR・AI交通</div></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="ne">
+    <div class="ne-news">
+      <div class="u-label">NEWS · お知らせ</div>
+      <h2 class="u-title" style="font-size:clamp(20px,2.5vw,26px);">最新情報</h2>
+      <div style="margin-top:20px;">
+        <!-- ▼▼▼ ニュース：新しいものを上に追加 ▼▼▼ -->
+        <div class="ni" onclick="go('services')">
+          <div class="ni-date">MAR<b>22</b></div>
+          <div><span class="tag tg" style="margin-bottom:5px;display:inline-flex;">行政</span><div class="ni-title">令和7年度 宇美町物価対応生活応援給付金（1人1万円）のお知らせ</div></div>
+        </div>
+        <div class="ni" onclick="go('events')">
+          <div class="ni-date">MAR<b>18</b></div>
+          <div><span class="tag te" style="margin-bottom:5px;display:inline-flex;">イベント</span><div class="ni-title">第2回 宇美町こども絵画教室アトリエU-kids「わくわく展」3/13〜開催中</div></div>
+        </div>
+        <div class="ni" onclick="go('migration')">
+          <div class="ni-date">MAR<b>01</b></div>
+          <div><span class="tag tp" style="margin-bottom:5px;display:inline-flex;">移住</span><div class="ni-title">宇美町 令和7年度 移住・定住支援制度ガイドブック公開。補助金最大30万円</div></div>
+        </div>
+        <div class="ni" onclick="go('services')">
+          <div class="ni-date">FEB<b>20</b></div>
+          <div><span class="tag ty" style="margin-bottom:5px;display:inline-flex;">交通</span><div class="ni-title">のるーと宇美、炭焼地区でもAIオンデマンドバス利用可能に。新エリア追加</div></div>
+        </div>
+        <!-- ▲▲▲ ここまで ▲▲▲ -->
+      </div>
+      <div style="margin-top:18px;"><span class="u-more">すべてのお知らせを見る →</span></div>
+    </div>
+    <div class="ne-ev">
+      <div class="u-label">EVENTS · イベント</div>
+      <h2 class="u-title" style="font-size:clamp(20px,2.5vw,26px);">近日開催</h2>
+      <div class="evlist">
+        <!-- ▼▼▼ イベント：新しいものを上に追加 ▼▼▼ -->
+        <div class="evc" onclick="go('events')">
+          <div class="evc-cal" style="background:var(--e);"><div class="m">APR</div><div class="d">15</div></div>
+          <div><div class="evc-t">宇美八幡宮 春の大祭</div><div class="evc-m"><span>📍 宇美八幡宮</span><span>🕐 10:00〜</span></div></div>
+        </div>
+        <div class="evc" onclick="go('events')">
+          <div class="evc-cal" style="background:var(--g);"><div class="m">APR</div><div class="d">20</div></div>
+          <div><div class="evc-t">三郡山 春山ハイキングツアー</div><div class="evc-m"><span>📍 三郡山登山口</span><span>🕐 8:00集合</span></div></div>
+        </div>
+        <div class="evc" onclick="go('events')">
+          <div class="evc-cal" style="background:#6a5aaa;"><div class="m">MAY</div><div class="d">03</div></div>
+          <div><div class="evc-t">宇美町 商工祭り 2026</div><div class="evc-m"><span>📍 一本松公園</span><span>🕐 10:00〜</span></div></div>
+        </div>
+        <div class="evc" onclick="go('events')">
+          <div class="evc-cal" style="background:var(--b);"><div class="m">APR</div><div class="d">25</div></div>
+          <div><div class="evc-t">宇美町立図書館まつり 2026</div><div class="evc-m"><span>📍 宇美町立図書館</span><span>🕐 10:00〜</span></div></div>
+        </div>
+        <!-- ▲▲▲ ここまで ▲▲▲ -->
+      </div>
+      <div style="margin-top:14px;"><span class="u-more" onclick="go('events')">カレンダーで全て見る →</span></div>
+    </div>
+  </div>
+
+  <div class="pickup">
+    <div class="wrap">
+      <div class="pickup-label">PICKUP · ピックアップ</div>
+      <!-- ▼▼▼ ピックアップ：3件入れる ▼▼▼ -->
+      <div class="pickup-grid">
+        <div class="pkc" onclick="go('migration')"><div class="pkc-th" style="background:#ddeaf8;">🏡</div><div style="flex:1;"><div class="pkc-name">宇美町 空き家バンク</div><div class="pkc-sub">移住支援の空き家情報。補助金と合わせて活用を。</div></div><div class="pkc-badge">移住</div></div>
+        <div class="pkc" onclick="go('services')"><div class="pkc-th" style="background:#dff0e8;">💰</div><div style="flex:1;"><div class="pkc-name">生活応援給付金（1万円）</div><div class="pkc-sub">令和7年度。対象者に郵送でご案内します。</div></div><div class="pkc-badge">行政</div></div>
+        <div class="pkc" onclick="go('services')"><div class="pkc-th" style="background:#fde8d0;">🚌</div><div style="flex:1;"><div class="pkc-name">のるーと宇美</div><div class="pkc-sub">AIオンデマンドバス。アプリで予約してどこへでも。</div></div><div class="pkc-badge">交通</div></div>
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+    </div>
+  </div>
+
+  <section class="spots-s">
+    <div class="wrap">
+      <div class="spots-head">
+        <div><div class="u-label">SPOTS · 観光スポット</div><h2 class="u-title">宇美町を、感じる。</h2></div>
+        <span class="u-more" onclick="go('spots')">すべて見る →</span>
+      </div>
+      <div class="sg">
+        <div class="sc" style="background:linear-gradient(140deg,#7aaa50,#2a6e3f);" onclick="go('spots')"><div class="sc-bg">⛩️</div><div class="sc-ov"></div><div class="sc-info"><div class="sc-tag">SHRINE · 神社</div><div class="sc-name">宇美八幡宮<br><span style="font-size:12px;font-weight:400;font-family:sans-serif;">安産祈願の聖地 / 2600年の歴史</span></div></div></div>
+        <div class="sc" style="background:linear-gradient(140deg,#4a9a38,#2a7020);" onclick="go('spots')"><div class="sc-bg">🏔️</div><div class="sc-ov"></div><div class="sc-info"><div class="sc-tag">MOUNTAIN</div><div class="sc-name">三郡山</div></div></div>
+        <div class="sc" style="background:linear-gradient(140deg,#8a8a30,#b0a040);" onclick="go('spots')"><div class="sc-bg">🌳</div><div class="sc-ov"></div><div class="sc-info"><div class="sc-tag">NATURE</div><div class="sc-name">四王寺山</div></div></div>
+        <div class="sc" style="background:linear-gradient(140deg,#6a9a70,#3a6a40);" onclick="go('spots')"><div class="sc-bg">🌸</div><div class="sc-ov"></div><div class="sc-info"><div class="sc-tag">PARK</div><div class="sc-name">一本松公園</div></div></div>
+        <div class="sc" style="background:linear-gradient(140deg,#aa7030,#8a5020);" onclick="go('gourmet')"><div class="sc-bg">🍜</div><div class="sc-ov"></div><div class="sc-info"><div class="sc-tag">FOOD</div><div class="sc-name">日田焼そば</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="biz">
+    <div class="wrap">
+      <div class="u-label">FOR BUSINESS · 事業者の方へ</div>
+      <h2 class="u-title">宇美町で、商いを育てる。</h2>
+      <p class="u-desc">補助金・求人・広告掲載まで。宇美町で事業を営むすべての方を支援します。</p>
+      <div class="biz-grid">
+        <div class="biz-card"><div class="biz-n">01</div><span class="biz-ic">📋</span><div class="biz-t">補助金・融資情報</div><div class="biz-d">国・県・町の最新補助金を一元管理。申請締切の見落としを防ぎます。</div><div class="biz-cta">詳しく見る →</div></div>
+        <div class="biz-card"><div class="biz-n">02</div><span class="biz-ic">👥</span><div class="biz-t">求人・人材マッチング</div><div class="biz-d">宇美町内の求人掲載・移住者とのマッチング。地域に根ざした採用を。</div><div class="biz-cta">詳しく見る →</div></div>
+        <div class="biz-card"><div class="biz-n">03</div><span class="biz-ic">📣</span><div class="biz-t">広告・PR掲載</div><div class="biz-d">月間リーチを活用した地元向け広告枠。地元に刺さる広告を提供します。</div><div class="biz-cta">料金を見る →</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="adsec">
+    <div class="wrap">
+      <div class="adsec-in">
+        <div>
+          <div class="u-label">ADVERTISE · 広告掲載</div>
+          <h2 class="adsec-t">宇美町に届ける、<br>あなたの声。</h2>
+          <p class="adsec-d">「"うみまち"」は、宇美町民・移住検討者・観光客が集まる地域唯一の総合ポータル。ターゲットを絞った、無駄のない広告出稿を提供します。</p>
+          <button class="btn btn-e">広告掲載のご相談</button>
+        </div>
+        <div class="ad-mets">
+          <div class="adm"><div class="adm-n">37K+</div><div class="adm-l">月間リーチ数（目標）</div></div>
+          <div class="adm"><div class="adm-n">3種</div><div class="adm-l">バナー・記事・スポット</div></div>
+          <div class="adm"><div class="adm-n">地元</div><div class="adm-l">宇美町民に直接届く</div></div>
+          <div class="adm"><div class="adm-n">応相談</div><div class="adm-l">初期割引あり</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ft">
+    <div class="wrap">
+      <div class="ft-grid">
+        <div><div class="ft-logo">"うみまち"</div><p class="ft-catch">宇美町に関わるすべての人のための、<br>ひとつの入口。「このまちが、いい。」</p><div class="ft-share"><a href="https://twitter.com/share?text=%22うみまち%22+宇美町ポータル&url=https://umimachi.jp" target="_blank">𝕏</a><a href="https://line.me/R/msg/text/?" target="_blank">💬</a></div></div>
+        <div><div class="ft-h">サービス</div><ul class="ft-ul"><li><a onclick="go('top')">お知らせ</a></li><li><a onclick="go('events')">イベント</a></li><li><a onclick="go('gourmet')">グルメ・お店</a></li><li><a onclick="go('migration')">移住情報</a></li><li><a onclick="go('services')">行政・LINE</a></li></ul></div>
+        <div><div class="ft-h">事業者向け</div><ul class="ft-ul"><li><a>店舗掲載のご依頼</a></li><li><a>求人掲載</a></li><li><a>補助金情報</a></li><li><a>広告掲載</a></li></ul></div>
+        <div><div class="ft-h">うみまちについて</div><ul class="ft-ul"><li><a>このサイトについて</a></li><li><a>掲載・お問い合わせ</a></li><li><a>プライバシーポリシー</a></li><li><a href="https://www.town.umi.lg.jp/" target="_blank">宇美町役場 公式サイト</a></li></ul></div>
+      </div>
+      <div class="ft-bottom"><span>© 2026 "うみまち" — 後藤堅太郎 個人運営</span><span><a href="https://www.town.umi.lg.jp/" target="_blank">宇美町役場</a> · <a href="https://www.umi-hachimangu.or.jp/" target="_blank">宇美八幡宮</a></span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================================================
+  PAGE: GOURMET
+=================================================== -->
+<div class="pg" id="pg-gourmet">
+  <div class="ph">
+    <div class="wrap">
+      <div class="ph-flex">
+        <div><div class="u-label">GOURMET · グルメ</div><h1 class="u-title">宇美町の、おいしいを探す。</h1><p class="u-desc">地元の飲食店情報を掲載中。掲載希望はお問い合わせください。</p></div>
+        <button class="btn btn-g">お店を掲載する</button>
+      </div>
+      <div class="filter-bar">
+        <span class="fl">ジャンル</span>
+        <div class="chips" id="genre-chips">
+          <span class="chip on" data-f="all">すべて</span>
+          <span class="chip" data-f="noodle">麺・焼そば</span>
+          <span class="chip" data-f="cafe">カフェ</span>
+          <span class="chip" data-f="sushi">和食・寿司</span>
+          <span class="chip" data-f="teishoku">定食</span>
+          <span class="chip" data-f="izakaya">居酒屋</span>
+          <span class="chip" data-f="bread">パン・スイーツ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▼▼▼ お店リスト：shop-cardを追加するだけで掲載できます ▼▼▼
+       data-genre に以下を設定：noodle / cafe / sushi / teishoku / izakaya / bread
+  ▼▼▼ -->
+  <div class="shop-grid" id="shop-list">
+    <div class="shop-card" data-genre="cafe">
+      <div class="shop-thumb" style="background:#e0f0e8;">☕</div>
+      <div class="shop-tags"><span class="tag tg">カフェ</span><span class="tag tg">スイーツ</span></div>
+      <div class="shop-name">カフェ 木漏れ日</div>
+      <div class="shop-area">📍 宇美八幡宮近く</div>
+      <div class="shop-desc">緑に囲まれた落ち着いたカフェ。自家製スイーツと地元農家の野菜を使ったランチが人気。移住者にも地元民にも愛されるお店。</div>
+      <div class="shop-foot"><span class="shop-hours">🕐 10:00〜17:00（水定休）</span><span class="shop-rating">★ 4.4</span></div>
+    </div>
+    <div class="shop-card" data-genre="sushi">
+      <div class="shop-thumb" style="background:#f0e0f0;">🍣</div>
+      <div class="shop-tags"><span class="tag tp">和食</span><span class="tag tb">宴会対応</span></div>
+      <div class="shop-name">すし処 あおき</div>
+      <div class="shop-area">📍 宇美駅周辺</div>
+      <div class="shop-desc">糟屋産の新鮮な食材にこだわった老舗寿司店。職人が丁寧に握る江戸前スタイル。個室・宴会対応。慶事・法事にも。</div>
+      <div class="shop-foot"><span class="shop-hours">🕐 11:30〜14:00 / 17:00〜21:00</span><span class="shop-rating">★ 4.5</span></div>
+    </div>
+    <div class="shop-card" data-genre="teishoku">
+      <div class="shop-thumb" style="background:#e0f5e0;">🍚</div>
+      <div class="shop-tags"><span class="tag tg">定食</span><span class="tag tg">ランチ</span></div>
+      <div class="shop-name">定食屋 みどり</div>
+      <div class="shop-area">📍 宇美中央エリア</div>
+      <div class="shop-desc">地元のお母さんたちが集う家庭的な定食屋。日替わりランチは500円〜でボリューム満点。子連れ歓迎、テーブル席あり。</div>
+      <div class="shop-foot"><span class="shop-hours">🕐 11:00〜14:00（土日祝休）</span><span class="shop-rating">★ 4.3</span></div>
+    </div>
+    <div class="shop-card" data-genre="izakaya">
+      <div class="shop-thumb" style="background:#fde8d0;">🍺</div>
+      <div class="shop-tags"><span class="tag te">居酒屋</span><span class="tag tb">個室あり</span></div>
+      <div class="shop-name">居酒屋 宇美の里</div>
+      <div class="shop-area">📍 宇美駅徒歩3分</div>
+      <div class="shop-desc">地元食材を使った創作和食と豊富な日本酒が自慢。地元事業者が集まる名店。各種宴会・法人利用多数。</div>
+      <div class="shop-foot"><span class="shop-hours">🕐 17:00〜23:00（月定休）</span><span class="shop-rating">★ 4.7</span></div>
+    </div>
+    <div class="shop-card" data-genre="bread">
+      <div class="shop-thumb" style="background:#f0f8e0;">🍞</div>
+      <div class="shop-tags"><span class="tag tg">パン</span><span class="tag tg">テイクアウト</span></div>
+      <div class="shop-name">パン工房 四王寺</div>
+      <div class="shop-area">📍 四王寺山麓</div>
+      <div class="shop-desc">四王寺山の麓に佇む小さなパン屋。毎朝焼き上がる天然酵母パンは開店30分で完売することも。週末は行列必至。</div>
+      <div class="shop-foot"><span class="shop-hours">🕐 8:00〜売切次第（月火定休）</span><span class="shop-rating">★ 4.8</span></div>
+    </div>
+    <div class="shop-card" data-genre="cafe">
+      <div class="shop-thumb" style="background:#f5f0e0;">🧇</div>
+      <div class="shop-tags"><span class="tag ty">モーニング</span><span class="tag tg">カフェ</span></div>
+      <div class="shop-name">喫茶 さくら亭</div>
+      <div class="shop-area">📍 新原エリア</div>
+      <div class="shop-desc">創業30年以上の昔ながらの喫茶店。モーニングはトースト・ゆで卵・コーヒーのセットが450円。地元のご年配に人気。</div>
+      <div class="shop-foot"><span class="shop-hours">🕐 7:30〜15:00（木定休）</span><span class="shop-rating">★ 4.2</span></div>
+    </div>
+  </div>
+  <!-- ▲▲▲ ここまで ▲▲▲ -->
+
+  <div class="load-more">
+    <p style="font-size:13px;color:var(--mid);margin-bottom:14px;">6件表示中 / 掲載店募集中</p>
+    <button class="btn btn-o">お店を掲載する</button>
+  </div>
+
+  <footer class="ft"><div class="wrap"><div class="ft-grid"><div><div class="ft-logo">"うみまち"</div><p class="ft-catch">宇美町のすべてのグルメ情報をお届け。</p></div><div><div class="ft-h">サービス</div><ul class="ft-ul"><li><a onclick="go('top')">トップ</a></li><li><a onclick="go('events')">イベント</a></li><li><a onclick="go('spots')">観光</a></li></ul></div><div><div class="ft-h">お店の方へ</div><ul class="ft-ul"><li><a>店舗掲載のご依頼</a></li><li><a>広告掲載</a></li></ul></div><div><div class="ft-h">うみまちについて</div><ul class="ft-ul"><li><a>お問い合わせ</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 "うみまち"</span></div></div></footer>
+</div>
+
+<!-- ===================================================
+  PAGE: EVENTS
+=================================================== -->
+<div class="pg" id="pg-events">
+  <div class="ph"><div class="wrap"><div class="ph-flex"><div><div class="u-label">EVENTS · イベント</div><h1 class="u-title">宇美町の、にぎわいを探す。</h1><p class="u-desc">祭りから商工会イベント、スポーツ大会まで全て掲載。</p></div><button class="btn btn-g">イベントを登録する</button></div></div></div>
+
+  <div class="cal-nav">
+    <div style="display:flex;gap:6px;"><button class="cal-btn">‹</button><button class="cal-btn">›</button></div>
+    <div class="cal-month-title">2026年 4月</div>
+    <div style="display:flex;gap:6px;">
+      <button class="cal-btn" style="width:auto;padding:0 12px;font-size:12px;font-weight:700;background:var(--g);color:#fff;border-color:var(--g);">カレンダー</button>
+      <button class="cal-btn" style="width:auto;padding:0 12px;font-size:12px;font-weight:700;">リスト</button>
+    </div>
+  </div>
+
+  <div class="cal-wrap"><div class="cal-inner">
+    <div class="cal-hrow">
+      <div class="cal-dh" style="color:#c04040;">日</div><div class="cal-dh">月</div><div class="cal-dh">火</div><div class="cal-dh">水</div><div class="cal-dh">木</div><div class="cal-dh">金</div><div class="cal-dh" style="color:#3060c0;">土</div>
+    </div>
+    <div class="cal-body">
+      <div class="cal-cell other"><div class="cal-dn">29</div></div><div class="cal-cell other"><div class="cal-dn">30</div></div><div class="cal-cell other"><div class="cal-dn">31</div></div>
+      <div class="cal-cell"><div class="cal-dn">1</div><div class="cal-dot" style="background:#dff0e8;color:var(--g);">🌸 お花見</div></div>
+      <div class="cal-cell"><div class="cal-dn">2</div></div><div class="cal-cell"><div class="cal-dn">3</div></div><div class="cal-cell"><div class="cal-dn">4</div></div>
+      <div class="cal-cell"><div class="cal-dn">5</div><div class="cal-dot" style="background:#f5ecd8;color:var(--e);">⛩ 宮参り</div></div>
+      <div class="cal-cell"><div class="cal-dn">6</div></div><div class="cal-cell"><div class="cal-dn">7</div></div><div class="cal-cell"><div class="cal-dn">8</div></div><div class="cal-cell"><div class="cal-dn">9</div></div><div class="cal-cell"><div class="cal-dn">10</div></div>
+      <div class="cal-cell"><div class="cal-dn">11</div><div class="cal-dot" style="background:#ddeaf8;color:var(--b);">💼 商工会</div></div>
+      <div class="cal-cell"><div class="cal-dn">12</div></div><div class="cal-cell"><div class="cal-dn">13</div></div><div class="cal-cell"><div class="cal-dn">14</div></div>
+      <div class="cal-cell today"><div class="cal-dn">15</div><div class="cal-dot" style="background:#f5ecd8;color:var(--e);">⛩ 春の大祭</div></div>
+      <div class="cal-cell"><div class="cal-dn">16</div></div><div class="cal-cell"><div class="cal-dn">17</div></div><div class="cal-cell"><div class="cal-dn">18</div></div><div class="cal-cell"><div class="cal-dn">19</div></div>
+      <div class="cal-cell"><div class="cal-dn">20</div><div class="cal-dot" style="background:#dff0e8;color:var(--g);">🏔 ハイキング</div></div>
+      <div class="cal-cell"><div class="cal-dn">21</div></div><div class="cal-cell"><div class="cal-dn">22</div></div><div class="cal-cell"><div class="cal-dn">23</div></div><div class="cal-cell"><div class="cal-dn">24</div></div>
+      <div class="cal-cell"><div class="cal-dn">25</div><div class="cal-dot" style="background:#ddeaf8;color:var(--b);">📚 図書館まつり</div></div>
+      <div class="cal-cell"><div class="cal-dn">26</div></div><div class="cal-cell"><div class="cal-dn">27</div></div><div class="cal-cell"><div class="cal-dn">28</div></div><div class="cal-cell"><div class="cal-dn">29</div></div>
+      <div class="cal-cell"><div class="cal-dn">30</div><div class="cal-dot" style="background:#dff0e8;color:var(--g);">🌿 清掃活動</div></div>
+      <div class="cal-cell other"><div class="cal-dn">1</div></div><div class="cal-cell other"><div class="cal-dn">2</div></div>
+    </div>
+  </div></div>
+
+  <div class="ev-list">
+    <div class="wrap">
+      <div class="u-label">UPCOMING · 近日開催</div>
+      <h2 class="u-title" style="font-size:clamp(18px,2.5vw,24px);">4月のイベント一覧</h2>
+
+      <!-- ▼▼▼ イベントリスト：新しいものを上に追加 ▼▼▼ -->
+      <div class="ev-item">
+        <div class="ev-cal" style="background:var(--e);"><div class="m">APR</div><div class="d">15</div></div>
+        <div><div class="ev-title">宇美八幡宮 春の大祭</div><div class="ev-meta"><span>📍 宇美八幡宮</span><span>🕐 10:00〜16:00</span><span class="tag te">神社・祭り</span></div><div class="ev-desc">神功皇后・応神天皇誕生の地として名高い宇美八幡宮の春の例大祭。神輿渡御・雅楽演奏・地元グルメ出店。入場無料。</div></div>
+        <button class="btn btn-o" style="align-self:center;white-space:nowrap;font-size:12px;min-height:36px;padding:0 12px;">詳細</button>
+      </div>
+      <div class="ev-item">
+        <div class="ev-cal" style="background:var(--g);"><div class="m">APR</div><div class="d">20</div></div>
+        <div><div class="ev-title">三郡山 春山ハイキングツアー</div><div class="ev-meta"><span>📍 三郡山登山口</span><span>🕐 8:00集合</span><span class="tag tg">登山・自然</span></div><div class="ev-desc">福岡県を代表する登山スポット・三郡山。ガイド付きで初心者も安心。山頂からの絶景と春の山野草を楽しもう。無料駐車場あり。</div></div>
+        <button class="btn btn-o" style="align-self:center;white-space:nowrap;font-size:12px;min-height:36px;padding:0 12px;">詳細</button>
+      </div>
+      <div class="ev-item">
+        <div class="ev-cal" style="background:var(--b);"><div class="m">APR</div><div class="d">25</div></div>
+        <div><div class="ev-title">宇美町立図書館まつり 2026</div><div class="ev-meta"><span>📍 宇美町立図書館</span><span>🕐 10:00〜16:00</span><span class="tag tb">文化・教育</span></div><div class="ev-desc">本の交換市・読み聞かせ・著者トーク。子どもから大人まで楽しめます。</div></div>
+        <button class="btn btn-o" style="align-self:center;white-space:nowrap;font-size:12px;min-height:36px;padding:0 12px;">詳細</button>
+      </div>
+      <div class="ev-item">
+        <div class="ev-cal" style="background:#6a5aaa;"><div class="m">MAY</div><div class="d">3</div></div>
+        <div><div class="ev-title">宇美町 商工祭り 2026</div><div class="ev-meta"><span>📍 一本松公園</span><span>🕐 10:00〜18:00</span><span class="tag tp">地域・商工</span></div><div class="ev-desc">町内事業者が一堂に集まる年に一度の商工祭り。飲食・物販・ステージイベント・子どもコーナーなど盛りだくさん。</div></div>
+        <button class="btn btn-o" style="align-self:center;white-space:nowrap;font-size:12px;min-height:36px;padding:0 12px;">詳細</button>
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+    </div>
+  </div>
+
+  <footer class="ft"><div class="wrap"><div class="ft-grid"><div><div class="ft-logo">"うみまち"</div><p class="ft-catch">宇美町のすべてのイベントをカレンダーで。</p></div><div><div class="ft-h">サービス</div><ul class="ft-ul"><li><a onclick="go('top')">トップ</a></li><li><a onclick="go('gourmet')">グルメ</a></li><li><a onclick="go('spots')">観光</a></li></ul></div><div><div class="ft-h">登録</div><ul class="ft-ul"><li><a>イベント掲載申込</a></li></ul></div><div><div class="ft-h">うみまちについて</div><ul class="ft-ul"><li><a>お問い合わせ</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 "うみまち"</span></div></div></footer>
+</div>
+
+<!-- ===================================================
+  PAGE: SPOTS
+=================================================== -->
+<div class="pg" id="pg-spots">
+  <div class="ph"><div class="wrap"><div class="ph-flex"><div><div class="u-label">SPOTS · 観光スポット</div><h1 class="u-title">宇美町を、旅する。</h1><p class="u-desc">2600年の歴史の神社から標高936mの三郡山まで。</p></div></div></div></div>
+
+  <!-- ▼▼▼ スポットカード：追加はここ ▼▼▼ -->
+  <div class="spots-grid">
+    <div class="spt-card" style="background:linear-gradient(140deg,#7aaa50,#2a6e3f);"><div class="spt-bg">⛩️</div><div class="spt-ov"></div><div class="spt-info"><div class="spt-tag">SHRINE · 神社</div><div class="spt-name">宇美八幡宮</div><div class="spt-sub">安産祈願の聖地 · 2600年の歴史</div></div></div>
+    <div class="spt-card" style="background:linear-gradient(140deg,#4a9a38,#1a6a1a);"><div class="spt-bg">🏔️</div><div class="spt-ov"></div><div class="spt-info"><div class="spt-tag">MOUNTAIN · 登山</div><div class="spt-name">三郡山</div><div class="spt-sub">標高936m · 福岡県屈指の登山コース</div></div></div>
+    <div class="spt-card" style="background:linear-gradient(140deg,#5a8a28,#8aba48);"><div class="spt-bg">🌳</div><div class="spt-ov"></div><div class="spt-info"><div class="spt-tag">NATURE · ハイキング</div><div class="spt-name">四王寺山</div><div class="spt-sub">ハイキングコース · 古代山城跡</div></div></div>
+    <div class="spt-card" style="background:linear-gradient(140deg,#7a9a60,#3a6a30);"><div class="spt-bg">🌸</div><div class="spt-ov"></div><div class="spt-info"><div class="spt-tag">PARK · 公園</div><div class="spt-name">一本松公園</div><div class="spt-sub">桜の名所 · 春は花見客で賑わう</div></div></div>
+    <div class="spt-card" style="background:linear-gradient(140deg,#aa7830,#d4a040);"><div class="spt-bg">🚂</div><div class="spt-ov"></div><div class="spt-info"><div class="spt-tag">TRANSPORT · ローカル線</div><div class="spt-name">JR香椎線 DENCHA</div><div class="spt-sub">蓄電池電車 · 緑のローカル線</div></div></div>
+    <div class="spt-card" style="background:linear-gradient(140deg,#7070aa,#9090cc);"><div class="spt-bg">🏛️</div><div class="spt-ov"></div><div class="spt-info"><div class="spt-tag">HISTORY · 歴史</div><div class="spt-name">炭鉱遺産の里</div><div class="spt-sub">昭和の記憶が残る元炭鉱地帯</div></div></div>
+  </div>
+  <!-- ▲▲▲ ここまで ▲▲▲ -->
+
+  <section class="spot-detail">
+    <div class="wrap">
+      <div class="u-label">FEATURED · おすすめ</div>
+      <h2 class="u-title">宇美八幡宮</h2>
+      <div class="sd-grid">
+        <div>
+          <p class="sd-body">宇美八幡宮は、日本書紀・古事記に記された神功皇后が応神天皇を出産した地として知られる、2600年以上の歴史を持つ由緒ある神社です。<br><br>「宇美（産み）」の名の通り、全国から安産祈願に訪れる参拝者が絶えません。境内には樹齢2000年を超えるとも言われる大楠が立ち並び、訪れる人々を圧倒します。<br><br>春の大祭（4月15日）・夏越の大祓（6月）・秋季大祭（10月）など年間を通じて多くの行事が行われ、宇美町の文化と精神を支え続けています。</p>
+          <div class="sd-acts">
+            <a href="https://www.umi-hachimangu.or.jp/" target="_blank" class="btn btn-g">公式サイトを見る</a>
+            <button class="btn btn-o" onclick="go('events')">関連イベントを見る</button>
+          </div>
+        </div>
+        <div>
+          <div class="info-box">
+            <div class="info-row"><div class="info-k">所在地</div><div class="info-v">福岡県糟屋郡宇美町宇美1-1-1</div></div>
+            <div class="info-row"><div class="info-k">参拝時間</div><div class="info-v">6:00〜18:00（社務所 9:00〜）</div></div>
+            <div class="info-row"><div class="info-k">アクセス</div><div class="info-v">JR宇美駅から徒歩5分</div></div>
+            <div class="info-row"><div class="info-k">駐車場</div><div class="info-v">あり（無料）</div></div>
+            <div class="info-row"><div class="info-k">御利益</div><div class="info-v">安産・子育て・縁結び</div></div>
+            <div class="info-row"><div class="info-k">電話</div><div class="info-v"><a href="tel:0929321111" style="color:var(--b);">092-932-1111</a></div></div>
+          </div>
+          <div class="map-box">
+            <iframe src="https://maps.google.com/maps?q=宇美八幡宮+福岡県糟屋郡宇美町&output=embed&z=15" allowfullscreen loading="lazy"></iframe>
+            <div class="map-label">📍 JR香椎線 宇美駅から徒歩約5分</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ft"><div class="wrap"><div class="ft-grid"><div><div class="ft-logo">"うみまち"</div><p class="ft-catch">宇美町の自然と歴史を、余すことなく。</p></div><div><div class="ft-h">サービス</div><ul class="ft-ul"><li><a onclick="go('top')">トップ</a></li><li><a onclick="go('gourmet')">グルメ</a></li><li><a onclick="go('events')">イベント</a></li></ul></div><div><div class="ft-h">観光情報</div><ul class="ft-ul"><li><a>モデルコース</a></li><li><a>観光マップ</a></li></ul></div><div><div class="ft-h">うみまちについて</div><ul class="ft-ul"><li><a>お問い合わせ</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 "うみまち"</span></div></div></footer>
+</div>
+
+<!-- ===================================================
+  PAGE: MIGRATION
+=================================================== -->
+<div class="pg" id="pg-migration">
+  <div class="mig-hero">
+    <div class="wrap">
+      <div class="mig-in">
+        <div>
+          <div class="u-label" style="color:rgba(255,255,255,.6);">MIGRATION · 移住ガイド</div>
+          <h1 class="mig-h">宇美町で、<br>新しい暮らしを。</h1>
+          <p class="mig-sub">福岡空港から15分、豊かな自然と温かいコミュニティ。都市の利便性と田舎の安らぎを両立できる宇美町への移住をサポートします。</p>
+          <div class="mig-acts">
+            <a href="https://www.town.umi.lg.jp/" target="_blank" class="btn btn-w">役場に相談する</a>
+            <button class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.4);" onclick="go('services')">支援制度を見る</button>
+          </div>
+        </div>
+        <div class="mig-stats">
+          <div class="mstat"><div class="mstat-n">37,000</div><div class="mstat-l">人口（増加傾向）</div></div>
+          <div class="mstat"><div class="mstat-n">15分</div><div class="mstat-l">福岡空港からのアクセス</div></div>
+          <div class="mstat"><div class="mstat-n">30万円</div><div class="mstat-l">住宅改修補助（上限）</div></div>
+          <div class="mstat"><div class="mstat-n">60%</div><div class="mstat-l">豊かな山林面積</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="wrap">
+      <div class="u-label">HOW TO · 移住の流れ</div>
+      <h2 class="u-title">宇美町移住、4つのステップ</h2>
+      <div class="step-grid">
+        <div class="step"><div class="step-n">01</div><span class="step-ic">💻</span><div class="step-t">オンライン相談</div><div class="step-d">役場の企画財政課に移住相談。オンライン・電話・来庁いずれも対応。</div></div>
+        <div class="step"><div class="step-n">02</div><span class="step-ic">🚌</span><div class="step-t">お試し移住体験</div><div class="step-d">最大2週間の体験移住制度あり。のるーとを使って本物の暮らしを体験。</div></div>
+        <div class="step"><div class="step-n">03</div><span class="step-ic">🏡</span><div class="step-t">住まい探し</div><div class="step-d">空き家バンク・民間物件を紹介。住宅改修補助金（最大30万円）も活用可。</div></div>
+        <div class="step"><div class="step-n">04</div><span class="step-ic">🌱</span><div class="step-t">移住・定住開始</div><div class="step-d">転入手続きから地域コミュニティへの参加まで、移住後もフォローします。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="support-sec">
+    <div class="wrap">
+      <div class="u-label">SUPPORT · 支援制度</div>
+      <h2 class="u-title">移住を後押しする制度一覧</h2>
+      <!-- ▼▼▼ 支援制度：追加・編集はここ ▼▼▼ -->
+      <div class="sup-grid">
+        <div class="sup"><span class="sup-ic">🏡</span><div class="sup-t">住宅改修補助</div><div class="sup-d">高齢者・障がい者対応の住宅改修に最大30万円を補助。バリアフリー化をサポート。</div><div class="sup-amt">最大 30万円</div></div>
+        <div class="sup"><span class="sup-ic">🌾</span><div class="sup-t">農業体験・就農支援</div><div class="sup-d">農地・農機具の紹介から技術指導まで一貫サポート。農ある暮らしを実現。</div><div class="sup-amt">相談無料</div></div>
+        <div class="sup"><span class="sup-ic">👶</span><div class="sup-t">子育て支援</div><div class="sup-d">就学援助・心理サポート・放課後支援など、子育て世帯への手厚いサポートが充実。</div><div class="sup-amt">各種補助あり</div></div>
+        <div class="sup"><span class="sup-ic">💼</span><div class="sup-t">創業・起業支援</div><div class="sup-d">商工会の起業塾（無料）や融資制度を活用して、宇美町での起業を応援します。</div><div class="sup-amt">起業塾 無料</div></div>
+        <div class="sup"><span class="sup-ic">🚌</span><div class="sup-t">AI交通「のるーと宇美」</div><div class="sup-d">AIオンデマンドバスで車がなくても快適に移動。2023年2月より運行開始。</div><div class="sup-amt">低運賃</div></div>
+        <div class="sup"><span class="sup-ic">🌿</span><div class="sup-t">浄化槽設置補助</div><div class="sup-d">特定地域への合併処理浄化槽設置に最大53.7万円の補助金を交付。</div><div class="sup-amt">最大 537,000円</div></div>
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+    </div>
+  </div>
+
+  <div class="voices">
+    <div class="wrap">
+      <div class="u-label">VOICES · 移住者の声</div>
+      <h2 class="u-title">宇美町を選んだ理由</h2>
+      <!-- ▼▼▼ 移住者の声：追加・編集はここ ▼▼▼ -->
+      <div class="voice-grid">
+        <div class="voice"><p class="voice-q">「福岡市内に通勤しながら、週末は三郡山で登山。こんな暮らしが実現するとは思っていませんでした。地域の人も温かく、子どもたちも生き生きしています。」</p><div class="voice-p"><div class="voice-av">👨‍👩‍👧</div><div><div class="voice-nm">田中 健一さん（43歳）</div><div class="voice-at">福岡市から移住 · 2023年</div></div></div></div>
+        <div class="voice"><p class="voice-q">「宇美八幡宮の近くに住めることが嬉しくて移住を決めました。のるーとで動けるので、思ったより不便はないです。近所づきあいもとても温かい。」</p><div class="voice-p"><div class="voice-av">👩</div><div><div class="voice-nm">松本 恵美さん（36歳）</div><div class="voice-at">東京から移住 · 2024年</div></div></div></div>
+        <div class="voice"><p class="voice-q">「空き家バンクで古民家を取得し、カフェを開業。商工会の起業塾でサポートしてもらい、今では地元の常連さんが毎日来てくれます。」</p><div class="voice-p"><div class="voice-av">👨‍🍳</div><div><div class="voice-nm">木村 大輔さん（38歳）</div><div class="voice-at">大阪から移住 · 2022年</div></div></div></div>
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+      <div style="text-align:center;margin-top:26px;"><a href="https://www.town.umi.lg.jp/" target="_blank" class="btn btn-g">宇美町役場に移住相談する</a></div>
+    </div>
+  </div>
+
+  <footer class="ft"><div class="wrap"><div class="ft-grid"><div><div class="ft-logo">"うみまち"</div><p class="ft-catch">宇美町への移住・定住を、全力でサポートします。</p></div><div><div class="ft-h">移住情報</div><ul class="ft-ul"><li><a href="https://www.town.umi.lg.jp/" target="_blank">役場に相談する</a></li><li><a>空き家バンク</a></li></ul></div><div><div class="ft-h">サービス</div><ul class="ft-ul"><li><a onclick="go('top')">トップ</a></li><li><a onclick="go('spots')">観光スポット</a></li></ul></div><div><div class="ft-h">問い合わせ</div><ul class="ft-ul"><li><a href="tel:0929342247">役場 企画財政課</a></li><li><a href="tel:0929342247">092-934-2247</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 "うみまち"</span></div></div></footer>
+</div>
+
+<!-- ===================================================
+  PAGE: SERVICES
+=================================================== -->
+<div class="pg" id="pg-services">
+  <div class="ph"><div class="wrap"><div class="ph-flex"><div><div class="u-label">SERVICES · 行政サービス &amp; LINE</div><h1 class="u-title">宇美町の行政サービスと<br>役立つLINE集。</h1><p class="u-desc">役場窓口案内から補助金・子育て・防災まで。各種公式LINEもまとめました。</p></div></div></div></div>
+
+  <!-- ▼▼▼ 行政サービス：追加・編集はここ ▼▼▼ -->
+  <div class="svc-grid">
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">📋</span><div class="svc-nm">各種証明書</div><div class="svc-d">住民票・印鑑証明・戸籍謄本の申請方法</div><div class="svc-arr">→ 役場窓口へ</div></a>
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">👶</span><div class="svc-nm">子育て支援</div><div class="svc-d">保育園・就学援助・医療費助成・育児相談</div><div class="svc-arr">→ 子育てサイトへ</div></a>
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">🏥</span><div class="svc-nm">医療・福祉</div><div class="svc-d">国保・介護保険・障がい者支援・高齢者サービス</div><div class="svc-arr">→ 役場窓口へ</div></a>
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">🏡</span><div class="svc-nm">住宅・環境</div><div class="svc-d">住宅改修補助・浄化槽補助・ごみの出し方</div><div class="svc-arr">→ 役場窓口へ</div></a>
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">💼</span><div class="svc-nm">産業・雇用</div><div class="svc-d">創業支援・補助金・求人情報・商工会サービス</div><div class="svc-arr">→ 商工会へ</div></a>
+    <a class="svc-item" href="https://noruuto.com/" target="_blank"><span class="svc-ic">🚌</span><div class="svc-nm">のるーと宇美</div><div class="svc-d">AIオンデマンドバス。アプリで予約して乗るだけ</div><div class="svc-arr">→ のるーと公式へ</div></a>
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">🌊</span><div class="svc-nm">防災・安全</div><div class="svc-d">ハザードマップ・避難場所・防災無線・緊急連絡先</div><div class="svc-arr">→ 防災情報へ</div></a>
+    <a class="svc-item" href="https://www.town.umi.lg.jp/" target="_blank"><span class="svc-ic">🎓</span><div class="svc-nm">教育・生涯学習</div><div class="svc-d">小中学校・公民館講座・図書館・スポーツ施設</div><div class="svc-arr">→ 役場窓口へ</div></a>
+  </div>
+  <!-- ▲▲▲ ここまで ▲▲▲ -->
+
+  <div class="line-links">
+    <div class="wrap">
+      <div class="u-label">USEFUL LINE · 役立つLINE集</div>
+      <h2 class="u-title">宇美町で使えるLINE、まとめました。</h2>
+      <p class="u-desc">行政・防災・子育て・交通など、宇美町・糟屋郡で役立つ公式LINEアカウント一覧。</p>
+
+      <!-- ▼▼▼ LINEリンク：追加・編集はここ ▼▼▼ -->
+      <div class="ll-grid">
+        <a class="ll-card" href="https://www.town.umi.lg.jp/" target="_blank"><div class="ll-ic" style="background:#dff0e8;">🏛️</div><div><div class="ll-name">宇美町役場 公式LINE<span class="ll-badge">公式</span></div><div class="ll-sub">行政お知らせ・各種手続き案内・緊急情報</div></div></a>
+        <a class="ll-card" href="https://www.town.umi.lg.jp/" target="_blank"><div class="ll-ic" style="background:#ffe0e0;">🚒</div><div><div class="ll-name">糟屋南部消防組合<span class="ll-badge">公式</span></div><div class="ll-sub">火災・救急・防災情報をリアルタイムで配信</div></div></a>
+        <a class="ll-card" href="https://www.town.umi.lg.jp/" target="_blank"><div class="ll-ic" style="background:#ddeaf8;">👮</div><div><div class="ll-name">糟屋警察署 安全情報<span class="ll-badge">公式</span></div><div class="ll-sub">不審者情報・特殊詐欺注意・防犯情報を配信</div></div></a>
+        <a class="ll-card" href="https://www.town.umi.lg.jp/" target="_blank"><div class="ll-ic" style="background:#f5ecd8;">💼</div><div><div class="ll-name">宇美町商工会<span class="ll-badge">公式</span></div><div class="ll-sub">補助金・セミナー・商工会員向け情報を発信</div></div></a>
+        <a class="ll-card" href="https://www.town.umi.lg.jp/" target="_blank"><div class="ll-ic" style="background:#f0e0f5;">👶</div><div><div class="ll-name">宇美町 子育て支援センター</div><div class="ll-sub">育児相談・子育てイベント・保育園情報</div></div></a>
+        <a class="ll-card" href="https://www.umi-hachimangu.or.jp/" target="_blank"><div class="ll-ic" style="background:#dff0e8;">⛩️</div><div><div class="ll-name">宇美八幡宮<span class="ll-badge">公式</span></div><div class="ll-sub">祭事情報・御祈祷の受付・境内の最新情報</div></div></a>
+        <a class="ll-card" href="https://noruuto.com/" target="_blank"><div class="ll-ic" style="background:#ddeaf8;">🚌</div><div><div class="ll-name">のるーと宇美<span class="ll-badge">公式</span></div><div class="ll-sub">AIオンデマンドバスの運行情報・予約サポート</div></div></a>
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+      <p style="font-size:11px;color:var(--light);margin-top:14px;">※ 掲載希望の団体・事業者は<a href="mailto:info@umimachi.jp" style="color:var(--g);">こちら</a>からご連絡ください。</p>
+    </div>
+  </div>
+
+  <div class="faq-sec">
+    <div class="wrap">
+      <div class="u-label">FAQ · よくある質問</div>
+      <h2 class="u-title">行政手続き Q&amp;A</h2>
+      <!-- ▼▼▼ FAQ：追加・編集はここ ▼▼▼ -->
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">住民票はコンビニで取得できますか？<span class="faq-ic">＋</span></div>
+          <div class="faq-a">はい、マイナンバーカードをお持ちの方はコンビニのマルチコピー機から取得できます。手数料は窓口より100円安い200円。利用時間は6:30〜23:00（12月29日〜1月3日除く）。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">のるーと宇美はどうやって予約しますか？<span class="faq-ic">＋</span></div>
+          <div class="faq-a">スマートフォンアプリ「のるーと」をダウンロードして乗車予約ができます。電話予約も可能です。詳細は<a href="https://noruuto.com/" target="_blank" style="color:var(--g);">のるーと公式サイト</a>をご確認ください。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">生活応援給付金（1万円）の申請方法は？<span class="faq-ic">＋</span></div>
+          <div class="faq-a">令和7年度の給付金は、対象者に郵送でご案内します。オンライン申請・郵送申請のどちらでも受付可能。詳細は役場福祉課（092-932-1111）へ。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">転入届はいつまでに出す必要がありますか？<span class="faq-ic">＋</span></div>
+          <div class="faq-a">転居から14日以内に役場住民課窓口にて提出してください。必要書類：転出証明書・本人確認書類・マイナンバーカード（お持ちの方）。開庁：月〜金 8:30〜17:15。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">移住したいのですが、まず何をすればいいですか？<span class="faq-ic">＋</span></div>
+          <div class="faq-a">まずは宇美町役場 企画財政課（TEL: 092-934-2247 / MAIL: seikei@town.umi.lg.jp）にご相談ください。オンライン相談・お試し移住体験制度もあります。</div>
+        </div>
+      </div>
+      <!-- ▲▲▲ ここまで ▲▲▲ -->
+    </div>
+  </div>
+
+  <footer class="ft"><div class="wrap"><div class="ft-grid"><div><div class="ft-logo">"うみまち"</div><p class="ft-catch">宇美町の行政情報を、わかりやすく手軽に。</p></div><div><div class="ft-h">行政サービス</div><ul class="ft-ul"><li><a href="https://www.town.umi.lg.jp/" target="_blank">宇美町役場</a></li><li><a href="tel:0929321111">092-932-1111</a></li></ul></div><div><div class="ft-h">サービス</div><ul class="ft-ul"><li><a onclick="go('top')">トップ</a></li><li><a onclick="go('migration')">移住情報</a></li></ul></div><div><div class="ft-h">うみまちについて</div><ul class="ft-ul"><li><a>お問い合わせ</a></li><li><a>掲載申込</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 "うみまち" — 後藤堅太郎 個人運営</span><span><a href="https://www.town.umi.lg.jp/" target="_blank">宇美町役場 公式サイト</a></span></div></div></footer>
+</div>
+
+<!-- ===================================================
+  JAVASCRIPT
+=================================================== -->
+<script>
+// ページ切り替え
+var PAGES = ['top','gourmet','events','spots','migration','services'];
+
+function go(id) {
+  for (var i = 0; i < PAGES.length; i++) {
+    var p = PAGES[i];
+    var pg = document.getElementById('pg-' + p);
+    var n  = document.getElementById('n-' + p);
+    var d  = document.getElementById('d-' + p);
+    if (pg) pg.classList.toggle('on', p === id);
+    if (n)  n.classList.toggle('on',  p === id);
+    if (d)  d.classList.toggle('on',  p === id);
+  }
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  closeDrawer();
+}
+
+// ハンバーガーメニュー
+var ham    = document.getElementById('ham');
+var drawer = document.getElementById('drawer');
+var dbg    = document.getElementById('dbg');
+
+function closeDrawer() {
+  ham.classList.remove('on');
+  drawer.classList.remove('on');
+  dbg.classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+ham.addEventListener('click', function() {
+  var isOpen = drawer.classList.contains('on');
+  if (isOpen) {
+    closeDrawer();
+  } else {
+    ham.classList.add('on');
+    drawer.classList.add('on');
+    dbg.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  }
+});
+
+dbg.addEventListener('click', closeDrawer);
+
+// グルメフィルター
+var genreChips = document.getElementById('genre-chips');
+if (genreChips) {
+  genreChips.addEventListener('click', function(e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    var chips = genreChips.querySelectorAll('.chip');
+    for (var i = 0; i < chips.length; i++) chips[i].classList.remove('on');
+    chip.classList.add('on');
+    var f = chip.getAttribute('data-f');
+    var cards = document.querySelectorAll('#shop-list .shop-card');
+    for (var j = 0; j < cards.length; j++) {
+      var show = (!f || f === 'all' || cards[j].getAttribute('data-genre') === f);
+      cards[j].style.display = show ? 'block' : 'none';
+    }
+  });
+}
+
+// FAQ アコーディオン
+var faqQs = document.querySelectorAll('.faq-q');
+for (var k = 0; k < faqQs.length; k++) {
+  faqQs[k].addEventListener('click', function() {
+    var item = this.parentElement;
+    var isOpen = item.classList.contains('open');
+    var allItems = document.querySelectorAll('.faq-item');
+    for (var m = 0; m < allItems.length; m++) allItems[m].classList.remove('open');
+    if (!isOpen) item.classList.add('open');
+  });
+}
+
+// ティッカー自動複製
+(function() {
+  var tc = document.getElementById('ticker-content');
+  if (!tc) return;
+  var clone = tc.cloneNode(true);
+  clone.id = '';
+  tc.parentNode.appendChild(clone);
+})();
+</script>
+</body>
+</html>
