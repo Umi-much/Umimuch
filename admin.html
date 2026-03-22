@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>"うみまち" 管理画面</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#2a6e3f;--gl:#4a9a5f;--e:#b87820;--el:#d4a035;
+  --dark:#1e2a1a;--mid:#5a6650;--light:#9aaa90;
+  --border:#e0d8c8;--cream:#fdf8f0;--warm:#fefcf8;
+  --red:#c0392b;--blue:#1a5a8a;
+  --sans:'Zen Kaku Gothic New',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{font-family:var(--sans);font-size:14px;color:var(--dark);background:#f0f2f0;}
+button{font-family:var(--sans);cursor:pointer;}
+input,textarea,select{font-family:var(--sans);}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(140deg,#e8f4e8,#f0f8f0);}
+.login-box{background:#fff;border:1px solid var(--border);border-radius:10px;padding:40px 36px;width:92%;max-width:400px;box-shadow:0 8px 32px rgba(0,0,0,.1);}
+.login-logo{font-size:22px;font-weight:800;color:var(--g);margin-bottom:6px;}
+.login-sub{font-size:12px;color:var(--mid);margin-bottom:28px;}
+.login-label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--mid);margin-bottom:6px;display:block;}
+.login-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:4px;font-size:14px;font-family:var(--sans);transition:border-color .18s;margin-bottom:16px;}
+.login-input:focus{outline:none;border-color:var(--g);}
+.login-btn{width:100%;height:44px;background:var(--g);color:#fff;border:none;border-radius:4px;font-size:14px;font-weight:700;cursor:pointer;transition:background .18s;font-family:var(--sans);}
+.login-btn:hover{background:var(--gl);}
+.login-err{font-size:12px;color:var(--red);margin-top:8px;display:none;}
+.login-hint{font-size:11px;color:var(--light);margin-top:16px;text-align:center;}
+
+/* APP */
+#app{display:none;height:100vh;flex-direction:column;}
+#app.show{display:flex;}
+
+/* TOPBAR */
+.topbar{background:var(--dark);color:#fff;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar-logo{font-size:15px;font-weight:700;color:#a0d8a0;}
+.topbar-logo span{font-size:11px;color:rgba(255,255,255,.4);margin-left:8px;}
+.topbar-right{display:flex;align-items:center;gap:14px;}
+.topbar-site a{font-size:12px;color:#7ac87a;text-decoration:none;}
+.topbar-logout{font-size:12px;color:rgba(255,255,255,.4);cursor:pointer;background:none;border:none;font-family:var(--sans);}
+.topbar-logout:hover{color:#fff;}
+
+/* PUSH BAR */
+.push-bar{background:#1a2a1a;border-bottom:1px solid rgba(255,255,255,.08);padding:8px 24px;display:flex;align-items:center;gap:12px;font-size:12px;color:rgba(255,255,255,.5);flex-shrink:0;}
+.push-bar.unsaved{background:#3a2a10;color:#d4a035;}
+.push-btn{background:var(--g);color:#fff;border:none;border-radius:3px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:background .18s;}
+.push-btn:hover{background:var(--gl);}
+.push-btn:disabled{opacity:.5;cursor:not-allowed;}
+.push-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;}
+.push-dot.unsaved{background:var(--el);}
+.push-dot.saving{background:#4a9a9f;animation:pulse .8s infinite;}
+.push-dot.saved{background:#4aca6a;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden;}
+.sidebar{width:200px;background:#1e2a1e;overflow-y:auto;flex-shrink:0;}
+.sb-nav{padding:10px 0;}
+.sb-btn{display:flex;align-items:center;gap:9px;width:100%;padding:11px 18px;font-size:13px;font-weight:700;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;font-family:var(--sans);transition:all .18s;text-align:left;}
+.sb-btn:hover{background:rgba(255,255,255,.07);color:#fff;}
+.sb-btn.on{background:var(--g);color:#fff;}
+.sb-ic{font-size:16px;width:20px;text-align:center;}
+.sb-ext{display:block;margin:8px 14px;padding:8px;background:rgba(255,255,255,.06);border-radius:3px;text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-decoration:none;transition:all .18s;}
+.sb-ext:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:24px 28px;}
+.sec{display:none;}
+.sec.on{display:block;}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.sec-title{font-size:18px;font-weight:700;}
+.sec-sub{font-size:12px;color:var(--mid);margin-top:2px;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+.stat-n{font-size:26px;font-weight:700;color:var(--g);line-height:1;margin-bottom:4px;}
+.stat-l{font-size:11px;color:var(--mid);}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:18px 20px;margin-bottom:12px;}
+.card-title{font-size:14px;font-weight:700;margin-bottom:12px;}
+
+/* LIST */
+.li{background:#fff;border:1px solid var(--border);border-radius:4px;padding:13px 15px;margin-bottom:8px;display:flex;align-items:flex-start;gap:11px;}
+.li:hover{border-color:#c0c8b8;}
+.li-ic{width:40px;height:40px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.li-body{flex:1;min-width:0;}
+.li-name{font-size:14px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.li-sub{font-size:11px;color:var(--mid);}
+.li-acts{display:flex;gap:6px;flex-shrink:0;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;border:none;font-family:var(--sans);transition:all .18s;gap:5px;white-space:nowrap;}
+.btn-g{background:var(--g);color:#fff;}.btn-g:hover{background:var(--gl);}
+.btn-o{background:transparent;color:var(--g);border:1.5px solid var(--g);}.btn-o:hover{background:var(--g);color:#fff;}
+.btn-r{background:var(--red);color:#fff;}.btn-r:hover{opacity:.85;}
+.btn-lg{height:44px;padding:0 22px;font-size:13px;}
+.btn-sm{height:30px;padding:0 10px;font-size:11px;}
+
+/* FORM */
+.fg{margin-bottom:13px;}
+.fl{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--mid);margin-bottom:5px;display:block;}
+.fi,.fta,.fsel{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:4px;font-size:13px;font-family:var(--sans);transition:border-color .18s;background:#fff;}
+.fi:focus,.fta:focus,.fsel:focus{outline:none;border-color:var(--g);}
+.fta{resize:vertical;min-height:80px;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center;}
+.modal-bg.on{display:flex;}
+.modal{background:#fff;border-radius:8px;padding:24px;width:94%;max-width:540px;max-height:88vh;overflow-y:auto;}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.modal-title{font-size:16px;font-weight:700;}
+.modal-x{font-size:20px;color:var(--mid);cursor:pointer;background:none;border:none;line-height:1;padding:0;}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+
+/* SETTINGS */
+.sbox{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:16px;}
+.sbox-title{font-size:14px;font-weight:700;margin-bottom:14px;}
+.sbox-note{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:14px;background:var(--cream);padding:10px 12px;border-radius:4px;border-left:3px solid var(--el);}
+.token-row{display:flex;gap:8px;}
+.token-row .fi{flex:1;}
+
+/* NOTICE */
+.notice{background:#fffbeb;border:1px solid #f0d070;border-radius:4px;padding:10px 14px;font-size:12px;color:#7a6010;margin-bottom:16px;line-height:1.6;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;padding:11px 18px;border-radius:6px;font-size:13px;font-weight:700;z-index:999;transform:translateY(80px);opacity:0;transition:all .28s;max-width:340px;line-height:1.5;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast-ok{background:#1e4a2e;color:#7ada9a;}
+.toast-err{background:#4a1e1e;color:#da7a7a;}
+.toast-info{background:var(--dark);color:#fff;}
+
+@media(max-width:600px){
+  .sidebar{display:none;}
+  .content{padding:16px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .fr2,.fr3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">"うみまち" 管理画面</div>
+    <div class="login-sub">Umi Community Portal — Admin</div>
+    <label class="login-label">パスワード</label>
+    <input class="login-input" type="password" id="pw-input" placeholder="パスワードを入力" autocomplete="current-password">
+    <button class="login-btn" id="login-btn">ログイン</button>
+    <div class="login-err" id="login-err">パスワードが正しくありません</div>
+    <div class="login-hint">初期パスワード: umimachi2026</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-logo">"うみまち" 管理画面<span>Admin Panel</span></div>
+    <div class="topbar-right">
+      <div class="topbar-site"><a href="index.html" target="_blank">← サイトを見る</a></div>
+      <button class="topbar-logout" id="logout-btn">ログアウト</button>
+    </div>
+  </div>
+
+  <div class="push-bar" id="push-bar">
+    <div class="push-dot saved" id="push-dot"></div>
+    <span id="push-status">保存済み</span>
+    <button class="push-btn" id="push-btn" disabled>📤 GitHubに保存</button>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sb-nav">
+        <button class="sb-btn on" id="sb-dashboard" onclick="showSec('dashboard')"><span class="sb-ic">📊</span>ダッシュボード</button>
+        <button class="sb-btn" id="sb-shops"     onclick="showSec('shops')"><span class="sb-ic">🍽️</span>グルメ・お店</button>
+        <button class="sb-btn" id="sb-events"    onclick="showSec('events')"><span class="sb-ic">🎉</span>イベント</button>
+        <button class="sb-btn" id="sb-news"      onclick="showSec('news')"><span class="sb-ic">📢</span>お知らせ</button>
+        <button class="sb-btn" id="sb-ticker"    onclick="showSec('ticker')"><span class="sb-ic">📡</span>ティッカー</button>
+        <button class="sb-btn" id="sb-settings"  onclick="showSec('settings')"><span class="sb-ic">⚙️</span>GitHub設定</button>
+      </div>
+      <a href="index.html" target="_blank" class="sb-ext">← サイトを開く</a>
+    </aside>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="sec on" id="sec-dashboard">
+        <div class="sec-head">
+          <div><div class="sec-title">ダッシュボード</div><div class="sec-sub">コンテンツの管理・編集</div></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-n" id="st-shops">—</div><div class="stat-l">🍽️ 掲載店舗数</div></div>
+          <div class="stat-box"><div class="stat-n" id="st-events">—</div><div class="stat-l">🎉 イベント数</div></div>
+          <div class="stat-box"><div class="stat-n" id="st-news">—</div><div class="stat-l">📢 お知らせ数</div></div>
+          <div class="stat-box"><div class="stat-n" id="st-ticker">—</div><div class="stat-l">📡 ティッカー</div></div>
+        </div>
+        <div class="notice">💡 <strong>使い方：</strong> 左メニューで各項目を編集 → 上部の「GitHubに保存」ボタンを押すとサイトに反映されます（約1〜2分）。<br>初回は「GitHub設定」でPersonal Access Token（PAT）を登録してください。</div>
+        <div class="card" style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-g" onclick="showSec('shops')">🍽️ お店を追加</button>
+          <button class="btn btn-g" onclick="showSec('events')">🎉 イベントを追加</button>
+          <button class="btn btn-g" onclick="showSec('news')">📢 お知らせを追加</button>
+          <button class="btn btn-g" onclick="showSec('settings')">⚙️ GitHub設定</button>
+        </div>
+      </div>
+
+      <!-- SHOPS -->
+      <div class="sec" id="sec-shops">
+        <div class="sec-head">
+          <div><div class="sec-title">グルメ・お店</div><div class="sec-sub">飲食店・カフェ・テイクアウト情報の管理</div></div>
+          <button class="btn btn-g btn-lg" onclick="openShopModal(-1)">＋ お店を追加</button>
+        </div>
+        <div id="shops-list"></div>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="sec" id="sec-events">
+        <div class="sec-head">
+          <div><div class="sec-title">イベント</div><div class="sec-sub">地域イベント・祭りの管理</div></div>
+          <button class="btn btn-g btn-lg" onclick="openEventModal(-1)">＋ イベントを追加</button>
+        </div>
+        <div id="events-list"></div>
+      </div>
+
+      <!-- NEWS -->
+      <div class="sec" id="sec-news">
+        <div class="sec-head">
+          <div><div class="sec-title">お知らせ</div><div class="sec-sub">行政・イベント・地域情報のお知らせ</div></div>
+          <button class="btn btn-g btn-lg" onclick="openNewsModal(-1)">＋ お知らせを追加</button>
+        </div>
+        <div id="news-list"></div>
+      </div>
+
+      <!-- TICKER -->
+      <div class="sec" id="sec-ticker">
+        <div class="sec-head">
+          <div><div class="sec-title">ティッカー</div><div class="sec-sub">サイト上部を流れるニュース速報テキスト</div></div>
+          <button class="btn btn-g btn-lg" onclick="openTickerModal(-1)">＋ 追加</button>
+        </div>
+        <div id="ticker-list"></div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="sec" id="sec-settings">
+        <div class="sec-head"><div><div class="sec-title">GitHub設定</div><div class="sec-sub">自動Push機能のセットアップ</div></div></div>
+
+        <div class="sbox">
+          <div class="sbox-title">🔑 Personal Access Token（PAT）</div>
+          <div class="sbox-note">
+            <strong>取得手順：</strong><br>
+            1. GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)<br>
+            2. 「Generate new token (classic)」をクリック<br>
+            3. Note に「umimachi-admin」などと入力<br>
+            4. Scopeで <strong>repo</strong> にチェックを入れる<br>
+            5. 生成されたTokenをコピーして下に貼り付け<br>
+            ⚠️ Tokenはこのブラウザにのみ保存されます
+          </div>
+          <div class="token-row">
+            <input class="fi" type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <button class="btn btn-g" id="save-token-btn">保存</button>
+          </div>
+        </div>
+
+        <div class="sbox">
+          <div class="sbox-title">📁 リポジトリ設定</div>
+          <div class="fr2">
+            <div class="fg"><label class="fl">GitHubユーザー名</label><input class="fi" id="gh-owner" placeholder="umi-much"></div>
+            <div class="fg"><label class="fl">リポジトリ名</label><input class="fi" id="gh-repo" placeholder="Umimuch"></div>
+          </div>
+          <div class="fr2">
+            <div class="fg"><label class="fl">ブランチ名</label><input class="fi" id="gh-branch" placeholder="main"></div>
+            <div class="fg"><label class="fl">data.json のパス</label><input class="fi" id="gh-path" placeholder="data.json"></div>
+          </div>
+          <button class="btn btn-g" id="save-gh-btn">リポジトリ設定を保存</button>
+        </div>
+
+        <div class="sbox">
+          <div class="sbox-title">🔗 接続テスト</div>
+          <p style="font-size:13px;color:var(--mid);margin-bottom:12px;">設定が正しいか確認します。</p>
+          <button class="btn btn-o" id="test-btn">接続テストを実行</button>
+          <div id="test-result" style="margin-top:12px;font-size:13px;"></div>
+        </div>
+
+        <div class="sbox">
+          <div class="sbox-title">🔐 パスワード変更</div>
+          <div class="fr2">
+            <div class="fg"><label class="fl">新しいパスワード</label><input class="fi" type="password" id="new-pw1" placeholder="新しいパスワード"></div>
+            <div class="fg"><label class="fl">確認</label><input class="fi" type="password" id="new-pw2" placeholder="もう一度入力"></div>
+          </div>
+          <button class="btn btn-o" id="change-pw-btn">パスワードを変更</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: SHOP -->
+<div class="modal-bg" id="modal-shop">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="shop-modal-title">お店を追加</div>
+      <button class="modal-x" id="shop-modal-x">✕</button>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">お店の名前 *</label><input class="fi" id="s-name" placeholder="例：カフェ 木漏れ日"></div>
+      <div class="fg"><label class="fl">ジャンル *</label>
+        <select class="fsel" id="s-genre">
+          <option value="noodle">麺・焼そば</option>
+          <option value="cafe">カフェ</option>
+          <option value="sushi">和食・寿司</option>
+          <option value="teishoku">定食</option>
+          <option value="izakaya">居酒屋</option>
+          <option value="bread">パン・スイーツ</option>
+          <option value="other">その他</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">絵文字アイコン</label><input class="fi" id="s-emoji" placeholder="☕"></div>
+      <div class="fg"><label class="fl">エリア・場所</label><input class="fi" id="s-area" placeholder="宇美八幡宮近く"></div>
+    </div>
+    <div class="fg"><label class="fl">紹介文</label><textarea class="fta" id="s-desc" placeholder="お店の魅力を書いてください..."></textarea></div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">営業時間・定休日</label><input class="fi" id="s-hours" placeholder="10:00〜17:00（水定休）"></div>
+      <div class="fg"><label class="fl">評価（例：4.5）</label><input class="fi" id="s-rating" type="number" min="1" max="5" step="0.1" placeholder="4.5"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">電話番号（任意）</label><input class="fi" id="s-tel" placeholder="092-xxx-xxxx"></div>
+      <div class="fg"><label class="fl">Google Maps URL（任意）</label><input class="fi" id="s-map" placeholder="https://maps.google.com/..."></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" id="shop-cancel-btn">キャンセル</button>
+      <button class="btn btn-g" id="shop-save-btn">✓ 保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: EVENT -->
+<div class="modal-bg" id="modal-event">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="event-modal-title">イベントを追加</div>
+      <button class="modal-x" id="event-modal-x">✕</button>
+    </div>
+    <div class="fg"><label class="fl">イベント名 *</label><input class="fi" id="e-title" placeholder="宇美八幡宮 春の大祭"></div>
+    <div class="fr3">
+      <div class="fg"><label class="fl">月（英字3文字）</label><input class="fi" id="e-month" placeholder="APR"></div>
+      <div class="fg"><label class="fl">日</label><input class="fi" id="e-day" placeholder="15"></div>
+      <div class="fg"><label class="fl">カレンダー色</label><input class="fi" id="e-color" placeholder="#b87820"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">場所</label><input class="fi" id="e-place" placeholder="宇美八幡宮"></div>
+      <div class="fg"><label class="fl">時間</label><input class="fi" id="e-time" placeholder="10:00〜16:00"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">タグ種類</label>
+        <select class="fsel" id="e-tag">
+          <option value="tg">緑（自然・登山）</option>
+          <option value="te">オレンジ（神社・祭り）</option>
+          <option value="tb">青（文化・教育）</option>
+          <option value="tp">紫（地域・商工）</option>
+          <option value="ty">黄（その他）</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">タグのテキスト</label><input class="fi" id="e-tagLabel" placeholder="神社・祭り"></div>
+    </div>
+    <div class="fg"><label class="fl">イベントの詳細</label><textarea class="fta" id="e-desc" placeholder="イベントの説明を書いてください..."></textarea></div>
+    <div class="modal-foot">
+      <button class="btn btn-o" id="event-cancel-btn">キャンセル</button>
+      <button class="btn btn-g" id="event-save-btn">✓ 保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: NEWS -->
+<div class="modal-bg" id="modal-news">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="news-modal-title">お知らせを追加</div>
+      <button class="modal-x" id="news-modal-x">✕</button>
+    </div>
+    <div class="fg"><label class="fl">タイトル *</label><input class="fi" id="n-title" placeholder="令和7年度 宇美町物価対応..."></div>
+    <div class="fr3">
+      <div class="fg"><label class="fl">月（英字3文字）</label><input class="fi" id="n-month" placeholder="MAR"></div>
+      <div class="fg"><label class="fl">日</label><input class="fi" id="n-day" placeholder="22"></div>
+      <div class="fg"><label class="fl">タグのテキスト</label><input class="fi" id="n-label" placeholder="行政"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">タグ種類</label>
+        <select class="fsel" id="n-tag">
+          <option value="tg">緑（行政・環境）</option>
+          <option value="te">オレンジ（イベント）</option>
+          <option value="tb">青（お店・情報）</option>
+          <option value="tp">紫（移住）</option>
+          <option value="ty">黄（交通・その他）</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">リンク先ページ</label>
+        <select class="fsel" id="n-page">
+          <option value="top">トップ</option>
+          <option value="gourmet">グルメ</option>
+          <option value="events">イベント</option>
+          <option value="spots">観光スポット</option>
+          <option value="migration">移住</option>
+          <option value="services">行政・LINE</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" id="news-cancel-btn">キャンセル</button>
+      <button class="btn btn-g" id="news-save-btn">✓ 保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: TICKER -->
+<div class="modal-bg" id="modal-ticker">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="ticker-modal-title">ティッカーを追加</div>
+      <button class="modal-x" id="ticker-modal-x">✕</button>
+    </div>
+    <div class="fg"><label class="fl">テキスト *</label><input class="fi" id="t-text" placeholder="🌸 宇美八幡宮 春の大祭 4月15日開催"></div>
+    <div class="modal-foot">
+      <button class="btn btn-o" id="ticker-cancel-btn">キャンセル</button>
+      <button class="btn btn-g" id="ticker-save-btn">✓ 保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+var D = {ticker:[],news:[],events:[],shops:[]};
+var hasChanges = false;
+var shopEditIdx  = -1;
+var eventEditIdx = -1;
+var newsEditIdx  = -1;
+var tickerEditIdx = -1;
+
+var GENRE_BG    = {noodle:'#fde8d0',cafe:'#e0f0e8',sushi:'#f0e0f0',teishoku:'#e0f5e0',izakaya:'#fde8d0',bread:'#f0f8e0',other:'#f0f0e0'};
+var GENRE_EMOJI = {noodle:'🍜',cafe:'☕',sushi:'🍣',teishoku:'🍚',izakaya:'🍺',bread:'🍞',other:'🍴'};
+var GENRE_TAG   = {
+  noodle:{cls:'te',label:'麺・焼そば'},
+  cafe:{cls:'tg',label:'カフェ'},
+  sushi:{cls:'tp',label:'和食・寿司'},
+  teishoku:{cls:'tg',label:'定食'},
+  izakaya:{cls:'te',label:'居酒屋'},
+  bread:{cls:'tg',label:'パン'},
+  other:{cls:'ty',label:'その他'}
+};
+
+// ============================================================
+// LOGIN
+// ============================================================
+document.getElementById('pw-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { doLogin(); }
+});
+document.getElementById('login-btn').addEventListener('click', doLogin);
+document.getElementById('logout-btn').addEventListener('click', function() {
+  if (hasChanges && !confirm('未保存の変更があります。ログアウトしますか？')) { return; }
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').classList.remove('show');
+  document.getElementById('pw-input').value = '';
+  document.getElementById('login-err').style.display = 'none';
+});
+
+function doLogin() {
+  var pw = document.getElementById('pw-input').value;
+  var stored = localStorage.getItem('umi_admin_pw') || 'umimachi2026';
+  if (pw === stored) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').classList.add('show');
+    init();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+  }
+}
+
+document.getElementById('change-pw-btn').addEventListener('click', function() {
+  var p1 = document.getElementById('new-pw1').value;
+  var p2 = document.getElementById('new-pw2').value;
+  if (!p1) { toast('新しいパスワードを入力してください', 'err'); return; }
+  if (p1 !== p2) { toast('パスワードが一致しません', 'err'); return; }
+  localStorage.setItem('umi_admin_pw', p1);
+  document.getElementById('new-pw1').value = '';
+  document.getElementById('new-pw2').value = '';
+  toast('✅ パスワードを変更しました', 'ok');
+});
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  // GitHub設定を復元
+  var cfgMap = [['gh-token','umi_gh_token',''],['gh-owner','umi_gh_owner','umi-much'],['gh-repo','umi_gh_repo','Umimuch'],['gh-branch','umi_gh_branch','main'],['gh-path','umi_gh_path','data.json']];
+  for (var i = 0; i < cfgMap.length; i++) {
+    var el = document.getElementById(cfgMap[i][0]);
+    if (el) { el.value = localStorage.getItem(cfgMap[i][1]) || cfgMap[i][2]; }
+  }
+  // data.json を fetch
+  fetch('data.json?nc=' + Date.now())
+    .then(function(r) { return r.json(); })
+    .then(function(json) {
+      D = json;
+      updateStats();
+      setStatus('saved');
+    })
+    .catch(function() {
+      var src = localStorage.getItem('umi_data_cache');
+      if (src) { try { D = JSON.parse(src); } catch(e) {} }
+      updateStats();
+      setStatus('saved');
+      toast('data.json の読み込みに失敗しました。ローカルキャッシュを使用します。', 'err');
+    });
+}
+
+function updateStats() {
+  document.getElementById('st-shops').textContent  = D.shops.length;
+  document.getElementById('st-events').textContent = D.events.length;
+  document.getElementById('st-news').textContent   = D.news.length;
+  document.getElementById('st-ticker').textContent = D.ticker.length;
+}
+
+function markChanged() {
+  hasChanges = true;
+  localStorage.setItem('umi_data_cache', JSON.stringify(D));
+  setStatus('unsaved');
+  updateStats();
+}
+
+function setStatus(s) {
+  var bar = document.getElementById('push-bar');
+  var dot = document.getElementById('push-dot');
+  var txt = document.getElementById('push-status');
+  var btn = document.getElementById('push-btn');
+  dot.className = 'push-dot ' + s;
+  bar.className = 'push-bar' + (s === 'unsaved' ? ' unsaved' : '');
+  btn.disabled  = (s !== 'unsaved');
+  if (s === 'unsaved') { txt.textContent = '未保存の変更があります — GitHubに保存してください'; }
+  else if (s === 'saving') { txt.textContent = 'GitHubに保存中...'; }
+  else { txt.textContent = '保存済み — GitHubと同期しています'; hasChanges = false; }
+}
+
+// ============================================================
+// GITHUB
+// ============================================================
+document.getElementById('save-token-btn').addEventListener('click', function() {
+  var t = document.getElementById('gh-token').value.trim();
+  if (!t) { toast('Tokenを入力してください', 'err'); return; }
+  localStorage.setItem('umi_gh_token', t);
+  toast('✅ Tokenを保存しました', 'ok');
+});
+
+document.getElementById('save-gh-btn').addEventListener('click', function() {
+  var map = [['gh-owner','umi_gh_owner'],['gh-repo','umi_gh_repo'],['gh-branch','umi_gh_branch'],['gh-path','umi_gh_path']];
+  for (var i = 0; i < map.length; i++) {
+    localStorage.setItem(map[i][1], document.getElementById(map[i][0]).value.trim());
+  }
+  toast('✅ リポジトリ設定を保存しました', 'ok');
+});
+
+document.getElementById('test-btn').addEventListener('click', function() {
+  var token = localStorage.getItem('umi_gh_token') || '';
+  var owner = localStorage.getItem('umi_gh_owner') || 'umi-much';
+  var repo  = localStorage.getItem('umi_gh_repo')  || 'Umimuch';
+  var res   = document.getElementById('test-result');
+  if (!token) { res.innerHTML = '<span style="color:var(--red);">❌ Tokenが未設定です</span>'; return; }
+  res.innerHTML = '⏳ 確認中...';
+  fetch('https://api.github.com/repos/' + owner + '/' + repo, {
+    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(j) {
+    if (j.full_name) {
+      res.innerHTML = '<span style="color:var(--g);">✅ 接続成功: ' + j.full_name + '</span>';
+    } else {
+      res.innerHTML = '<span style="color:var(--red);">❌ ' + (j.message || 'エラー') + '</span>';
+    }
+  })
+  .catch(function(e) { res.innerHTML = '<span style="color:var(--red);">❌ ' + e.message + '</span>'; });
+});
+
+document.getElementById('push-btn').addEventListener('click', function() {
+  var token  = localStorage.getItem('umi_gh_token') || '';
+  var owner  = localStorage.getItem('umi_gh_owner') || 'umi-much';
+  var repo   = localStorage.getItem('umi_gh_repo')  || 'Umimuch';
+  var branch = localStorage.getItem('umi_gh_branch')|| 'main';
+  var path   = localStorage.getItem('umi_gh_path')  || 'data.json';
+
+  if (!token) {
+    toast('GitHub Tokenが未設定です。「GitHub設定」で登録してください。', 'err');
+    showSec('settings');
+    return;
+  }
+
+  setStatus('saving');
+  document.getElementById('push-btn').disabled = true;
+
+  var content = btoa(unescape(encodeURIComponent(JSON.stringify(D, null, 2))));
+  var apiUrl  = 'https://api.github.com/repos/' + owner + '/' + repo + '/contents/' + path;
+  var headers = { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
+
+  fetch(apiUrl + '?ref=' + branch, { headers: headers })
+    .then(function(r) { return r.json(); })
+    .then(function(existing) {
+      var body = { message: '[admin] Update data.json', content: content, branch: branch };
+      if (existing.sha) { body.sha = existing.sha; }
+      return fetch(apiUrl, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+      if (result.content && result.content.sha) {
+        setStatus('saved');
+        toast('✅ GitHubに保存しました！約1〜2分でサイトに反映されます。', 'ok');
+      } else {
+        setStatus('unsaved');
+        toast('❌ 保存失敗: ' + (result.message || 'エラー'), 'err');
+      }
+    })
+    .catch(function(e) {
+      setStatus('unsaved');
+      toast('❌ 通信エラー: ' + e.message, 'err');
+    });
+});
+
+// ============================================================
+// SECTION
+// ============================================================
+function showSec(id) {
+  var secs = ['dashboard','shops','events','news','ticker','settings'];
+  for (var i = 0; i < secs.length; i++) {
+    document.getElementById('sec-'  + secs[i]).classList.toggle('on', secs[i] === id);
+    document.getElementById('sb-'   + secs[i]).classList.toggle('on', secs[i] === id);
+  }
+  if (id === 'shops')  { renderShops(); }
+  if (id === 'events') { renderEvents(); }
+  if (id === 'news')   { renderNews(); }
+  if (id === 'ticker') { renderTicker(); }
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function empty(label) {
+  return '<p style="color:var(--light);padding:20px;text-align:center;">まだ' + label + 'がありません</p>';
+}
+
+function renderShops() {
+  var html = '';
+  for (var i = 0; i < D.shops.length; i++) {
+    var s = D.shops[i];
+    html += '<div class="li"><div class="li-ic" style="background:' + s.bg + ';">' + s.emoji + '</div>';
+    html += '<div class="li-body"><div class="li-name">' + s.name + '</div>';
+    html += '<div class="li-sub">📍 ' + s.area + ' ｜ 🕐 ' + s.hours + ' ｜ ★ ' + s.rating + '</div></div>';
+    html += '<div class="li-acts"><button class="btn btn-o btn-sm" onclick="openShopModal(' + i + ')">編集</button>';
+    html += '<button class="btn btn-r btn-sm" onclick="delShop(' + i + ')">削除</button></div></div>';
+  }
+  document.getElementById('shops-list').innerHTML = html || empty('お店');
+}
+
+function renderEvents() {
+  var html = '';
+  for (var i = 0; i < D.events.length; i++) {
+    var e = D.events[i];
+    html += '<div class="li"><div class="li-ic" style="background:' + e.color + ';color:#fff;flex-direction:column;font-size:10px;font-weight:700;">' + e.month + '<span style="font-size:18px;font-weight:800;line-height:1.2;">' + e.day + '</span></div>';
+    html += '<div class="li-body"><div class="li-name">' + e.title + '</div>';
+    html += '<div class="li-sub">📍 ' + e.place + ' ｜ 🕐 ' + e.time + '</div></div>';
+    html += '<div class="li-acts"><button class="btn btn-o btn-sm" onclick="openEventModal(' + i + ')">編集</button>';
+    html += '<button class="btn btn-r btn-sm" onclick="delEvent(' + i + ')">削除</button></div></div>';
+  }
+  document.getElementById('events-list').innerHTML = html || empty('イベント');
+}
+
+function renderNews() {
+  var html = '';
+  for (var i = 0; i < D.news.length; i++) {
+    var n = D.news[i];
+    html += '<div class="li"><div class="li-ic" style="background:var(--cream);flex-direction:column;font-size:10px;font-weight:700;color:var(--e);">' + n.month + '<span style="font-size:18px;font-weight:800;line-height:1.2;">' + n.day + '</span></div>';
+    html += '<div class="li-body"><div class="li-name">' + n.title + '</div>';
+    html += '<div class="li-sub">' + n.label + ' → ' + n.page + '</div></div>';
+    html += '<div class="li-acts"><button class="btn btn-o btn-sm" onclick="openNewsModal(' + i + ')">編集</button>';
+    html += '<button class="btn btn-r btn-sm" onclick="delNews(' + i + ')">削除</button></div></div>';
+  }
+  document.getElementById('news-list').innerHTML = html || empty('お知らせ');
+}
+
+function renderTicker() {
+  var html = '';
+  for (var i = 0; i < D.ticker.length; i++) {
+    html += '<div class="li"><div class="li-body"><div class="li-name">' + D.ticker[i] + '</div></div>';
+    html += '<div class="li-acts"><button class="btn btn-o btn-sm" onclick="openTickerModal(' + i + ')">編集</button>';
+    html += '<button class="btn btn-r btn-sm" onclick="delTicker(' + i + ')">削除</button></div></div>';
+  }
+  document.getElementById('ticker-list').innerHTML = html || empty('ティッカー');
+}
+
+// ============================================================
+// MODAL OPEN/CLOSE
+// ============================================================
+function closeAll() {
+  var types = ['shop','event','news','ticker'];
+  for (var i = 0; i < types.length; i++) {
+    document.getElementById('modal-' + types[i]).classList.remove('on');
+  }
+}
+
+document.getElementById('shop-modal-x').addEventListener('click', closeAll);
+document.getElementById('event-modal-x').addEventListener('click', closeAll);
+document.getElementById('news-modal-x').addEventListener('click', closeAll);
+document.getElementById('ticker-modal-x').addEventListener('click', closeAll);
+document.getElementById('shop-cancel-btn').addEventListener('click', closeAll);
+document.getElementById('event-cancel-btn').addEventListener('click', closeAll);
+document.getElementById('news-cancel-btn').addEventListener('click', closeAll);
+document.getElementById('ticker-cancel-btn').addEventListener('click', closeAll);
+
+var modals = document.querySelectorAll('.modal-bg');
+for (var _i = 0; _i < modals.length; _i++) {
+  modals[_i].addEventListener('click', function(e) {
+    if (e.target === e.currentTarget) { closeAll(); }
+  });
+}
+
+// ============================================================
+// SHOP
+// ============================================================
+function openShopModal(idx) {
+  shopEditIdx = idx;
+  document.getElementById('shop-modal-title').textContent = idx === -1 ? 'お店を追加' : 'お店を編集';
+  if (idx >= 0) {
+    var s = D.shops[idx];
+    document.getElementById('s-name').value   = s.name;
+    document.getElementById('s-genre').value  = s.genre;
+    document.getElementById('s-emoji').value  = s.emoji;
+    document.getElementById('s-area').value   = s.area;
+    document.getElementById('s-desc').value   = s.desc;
+    document.getElementById('s-hours').value  = s.hours;
+    document.getElementById('s-rating').value = s.rating;
+    document.getElementById('s-tel').value    = s.tel || '';
+    document.getElementById('s-map').value    = s.map || '';
+  } else {
+    var ids = ['s-name','s-emoji','s-area','s-desc','s-hours','s-rating','s-tel','s-map'];
+    for (var i = 0; i < ids.length; i++) { document.getElementById(ids[i]).value = ''; }
+  }
+  document.getElementById('modal-shop').classList.add('on');
+}
+
+document.getElementById('shop-save-btn').addEventListener('click', function() {
+  var name = document.getElementById('s-name').value.trim();
+  if (!name) { toast('お店の名前を入力してください', 'err'); return; }
+  var g = document.getElementById('s-genre').value;
+  var shop = {
+    genre:  g,
+    emoji:  document.getElementById('s-emoji').value.trim() || GENRE_EMOJI[g],
+    bg:     GENRE_BG[g] || '#f0f0e0',
+    name:   name,
+    area:   document.getElementById('s-area').value.trim(),
+    tags:   [GENRE_TAG[g]],
+    desc:   document.getElementById('s-desc').value.trim(),
+    hours:  document.getElementById('s-hours').value.trim(),
+    rating: document.getElementById('s-rating').value || '4.0',
+    tel:    document.getElementById('s-tel').value.trim(),
+    map:    document.getElementById('s-map').value.trim()
+  };
+  if (shopEditIdx === -1) { D.shops.unshift(shop); } else { D.shops[shopEditIdx] = shop; }
+  markChanged(); closeAll(); renderShops();
+  toast('✅ 保存しました。上部の「GitHubに保存」を押してサイトに反映してください。', 'info');
+});
+
+function delShop(i) {
+  if (!confirm('「' + D.shops[i].name + '」を削除しますか？')) { return; }
+  D.shops.splice(i, 1);
+  markChanged(); renderShops();
+  toast('🗑️ 削除しました', 'info');
+}
+
+// ============================================================
+// EVENT
+// ============================================================
+function openEventModal(idx) {
+  eventEditIdx = idx;
+  document.getElementById('event-modal-title').textContent = idx === -1 ? 'イベントを追加' : 'イベントを編集';
+  if (idx >= 0) {
+    var e = D.events[idx];
+    document.getElementById('e-title').value    = e.title;
+    document.getElementById('e-month').value    = e.month;
+    document.getElementById('e-day').value      = e.day;
+    document.getElementById('e-color').value    = e.color;
+    document.getElementById('e-place').value    = e.place;
+    document.getElementById('e-time').value     = e.time;
+    document.getElementById('e-tag').value      = e.tag;
+    document.getElementById('e-tagLabel').value = e.tagLabel;
+    document.getElementById('e-desc').value     = e.desc;
+  } else {
+    var ids = ['e-title','e-month','e-day','e-color','e-place','e-time','e-tagLabel','e-desc'];
+    for (var i = 0; i < ids.length; i++) { document.getElementById(ids[i]).value = ''; }
+  }
+  document.getElementById('modal-event').classList.add('on');
+}
+
+document.getElementById('event-save-btn').addEventListener('click', function() {
+  var title = document.getElementById('e-title').value.trim();
+  if (!title) { toast('イベント名を入力してください', 'err'); return; }
+  var ev = {
+    title:    title,
+    month:    document.getElementById('e-month').value.trim().toUpperCase(),
+    day:      document.getElementById('e-day').value.trim(),
+    color:    document.getElementById('e-color').value.trim() || '#2a6e3f',
+    place:    document.getElementById('e-place').value.trim(),
+    time:     document.getElementById('e-time').value.trim(),
+    tag:      document.getElementById('e-tag').value,
+    tagLabel: document.getElementById('e-tagLabel').value.trim(),
+    desc:     document.getElementById('e-desc').value.trim()
+  };
+  if (eventEditIdx === -1) { D.events.unshift(ev); } else { D.events[eventEditIdx] = ev; }
+  markChanged(); closeAll(); renderEvents();
+  toast('✅ 保存しました。上部の「GitHubに保存」を押してサイトに反映してください。', 'info');
+});
+
+function delEvent(i) {
+  if (!confirm('「' + D.events[i].title + '」を削除しますか？')) { return; }
+  D.events.splice(i, 1);
+  markChanged(); renderEvents();
+  toast('🗑️ 削除しました', 'info');
+}
+
+// ============================================================
+// NEWS
+// ============================================================
+function openNewsModal(idx) {
+  newsEditIdx = idx;
+  document.getElementById('news-modal-title').textContent = idx === -1 ? 'お知らせを追加' : 'お知らせを編集';
+  if (idx >= 0) {
+    var n = D.news[idx];
+    document.getElementById('n-title').value = n.title;
+    document.getElementById('n-month').value = n.month;
+    document.getElementById('n-day').value   = n.day;
+    document.getElementById('n-tag').value   = n.tag;
+    document.getElementById('n-label').value = n.label;
+    document.getElementById('n-page').value  = n.page;
+  } else {
+    var ids = ['n-title','n-month','n-day','n-label'];
+    for (var i = 0; i < ids.length; i++) { document.getElementById(ids[i]).value = ''; }
+  }
+  document.getElementById('modal-news').classList.add('on');
+}
+
+document.getElementById('news-save-btn').addEventListener('click', function() {
+  var title = document.getElementById('n-title').value.trim();
+  if (!title) { toast('タイトルを入力してください', 'err'); return; }
+  var item = {
+    title: title,
+    month: document.getElementById('n-month').value.trim().toUpperCase(),
+    day:   document.getElementById('n-day').value.trim(),
+    tag:   document.getElementById('n-tag').value,
+    label: document.getElementById('n-label').value.trim(),
+    page:  document.getElementById('n-page').value
+  };
+  if (newsEditIdx === -1) { D.news.unshift(item); } else { D.news[newsEditIdx] = item; }
+  markChanged(); closeAll(); renderNews();
+  toast('✅ 保存しました。上部の「GitHubに保存」を押してサイトに反映してください。', 'info');
+});
+
+function delNews(i) {
+  if (!confirm('このお知らせを削除しますか？')) { return; }
+  D.news.splice(i, 1);
+  markChanged(); renderNews();
+  toast('🗑️ 削除しました', 'info');
+}
+
+// ============================================================
+// TICKER
+// ============================================================
+function openTickerModal(idx) {
+  tickerEditIdx = idx;
+  document.getElementById('ticker-modal-title').textContent = idx === -1 ? 'ティッカーを追加' : 'ティッカーを編集';
+  document.getElementById('t-text').value = idx >= 0 ? D.ticker[idx] : '';
+  document.getElementById('modal-ticker').classList.add('on');
+}
+
+document.getElementById('ticker-save-btn').addEventListener('click', function() {
+  var text = document.getElementById('t-text').value.trim();
+  if (!text) { toast('テキストを入力してください', 'err'); return; }
+  if (tickerEditIdx === -1) { D.ticker.push(text); } else { D.ticker[tickerEditIdx] = text; }
+  markChanged(); closeAll(); renderTicker();
+  toast('✅ 保存しました。上部の「GitHubに保存」を押してサイトに反映してください。', 'info');
+});
+
+function delTicker(i) {
+  if (!confirm('このティッカーを削除しますか？')) { return; }
+  D.ticker.splice(i, 1);
+  markChanged(); renderTicker();
+  toast('🗑️ 削除しました', 'info');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+var _toastTimer = null;
+function toast(msg, type) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast toast-' + (type || 'info') + ' show';
+  if (_toastTimer) { clearTimeout(_toastTimer); }
+  _toastTimer = setTimeout(function() { el.classList.remove('show'); }, 3800);
+}
+</script>
+</body>
+</html>
