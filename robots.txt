@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://umi-much.github.io/Umimuch/sitemap.xml
