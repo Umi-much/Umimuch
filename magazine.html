@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>うみまち | Umimachi Magazine</title>
+<meta name="description" content="月に2人、宇美町に生きる人を訪ねる。一杯の焼きそばに人生をかけた人、薪を割って届ける人、子どもに本を読み続ける人——ジャンルも肩書きも問わず、「なぜそこまで？」と聞きたくなる人だけを集めた、宇美町の雑誌型ウェブメディア。">
+<meta name="keywords" content="宇美町,うみまち,糟屋郡,雑誌,インタビュー,人物,地域メディア,移住">
+<link rel="canonical" href="https://umi-much.github.io/Umimuch/magazine.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="うみまち | Umimachi Magazine">
+<meta property="og:description" content="月に2人、宇美町に生きる魅力ある人を訪ねる雑誌。">
+<meta property="og:url" content="https://umi-much.github.io/Umimuch/magazine.html">
+<meta property="og:image" content="https://umi-much.github.io/Umimuch/ogp.png">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="うみまち">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="うみまち | Umimachi Magazine">
+<meta name="twitter:description" content="月に2人、宇美町に生きる魅力ある人を訪ねる雑誌。">
+<meta name="twitter:image" content="https://umi-much.github.io/Umimuch/ogp.png">
+<meta name="google-site-verification" content="la_6IGFOXHrX7_Azu1HLkg10JC-jciXeFN9VLZZ9hBg">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@500;700;900&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --ink:#000000;
+  --ink-2:#333333;
+  --warm:#888888;
+  --line:#E5E5E5;
+  --line-d:#CCCCCC;
+  --tag-bg:rgba(0,0,0,.7);
+  --serif-jp:'Noto Serif JP','Yu Mincho','Hiragino Mincho ProN',serif;
+  --sans-jp:'Noto Sans JP','Yu Gothic','Hiragino Sans',sans-serif;
+  --sans-en:'Inter',-apple-system,sans-serif;
+  --header-h:64px;
+  --radius:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans-jp);
+  font-size:14px;
+  line-height:1.7;
+  font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent;}
+button{font-family:inherit;background:none;border:none;cursor:pointer;color:inherit;-webkit-tap-highlight-color:transparent;}
+img,picture{max-width:100%;display:block;}
+ul,ol{list-style:none;}
+
+::selection{background:var(--ink);color:var(--bg);}
+
+.wrapper-large{max-width:1280px;margin:0 auto;padding:0 16px;}
+.wrapper-narrow{max-width:780px;margin:0 auto;padding:0 16px;}
+
+/* ============ HEADER (POPEYE-faithful) ============ */
+.header{
+  position:sticky;top:0;z-index:300;
+  height:var(--header-h);
+  background:var(--bg);
+  border-bottom:1px solid var(--ink);
+  display:flex;align-items:center;
+  padding:0 24px;
+}
+.header h1{
+  margin:0;line-height:1;
+  font-family:var(--serif-jp);
+  font-weight:900;
+  font-size:30px;
+  letter-spacing:.06em;
+  color:var(--ink);
+}
+.header h1 a{display:inline-block;}
+.header h1 small{
+  display:block;
+  font-family:var(--sans-en);
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.4em;
+  margin-top:1px;
+  color:var(--ink);
+  text-transform:uppercase;
+}
+.nav-trigger{
+  margin-left:auto;
+  width:32px;height:32px;
+  position:relative;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-trigger span,
+.nav-trigger::before,
+.nav-trigger::after{
+  content:'';
+  display:block;position:absolute;
+  width:22px;height:1.5px;
+  background:var(--ink);
+  transition:transform .25s,opacity .25s;
+}
+.nav-trigger::before{top:9px;}
+.nav-trigger::after{bottom:9px;}
+.nav-trigger span{top:50%;transform:translateY(-50%);}
+.nav-trigger.on::before{top:50%;transform:translateY(-50%) rotate(45deg);}
+.nav-trigger.on::after{bottom:50%;transform:translateY(50%) rotate(-45deg);}
+.nav-trigger.on span{opacity:0;}
+.nav-search{
+  margin-left:8px;
+  width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.nav-search svg{width:16px;height:16px;fill:var(--ink);}
+
+/* DRAWER (overlay menu) */
+.drawer{
+  position:fixed;top:var(--header-h);left:0;right:0;bottom:0;
+  background:var(--bg);
+  z-index:280;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+  border-top:1px solid var(--ink);
+}
+.drawer.on{transform:translateX(0);}
+.drawer-list{padding:32px 24px;max-width:1280px;margin:0 auto;}
+.drawer-list li{
+  border-bottom:1px solid var(--line);
+}
+.drawer-list a{
+  display:flex;align-items:baseline;gap:20px;
+  padding:24px 0;
+}
+.drawer-list .num{
+  font-family:var(--sans-en);
+  font-size:11px;
+  letter-spacing:.18em;
+  color:var(--warm);
+  font-weight:700;
+  width:32px;flex-shrink:0;
+}
+.drawer-list .ja{
+  font-family:var(--serif-jp);
+  font-weight:900;
+  font-size:28px;
+  letter-spacing:.04em;
+}
+.drawer-list .en{
+  font-family:var(--sans-en);
+  font-size:11px;
+  letter-spacing:.22em;
+  color:var(--warm);
+  margin-left:auto;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+/* ============ ISSUE STRIP (under header) ============ */
+.issue-strip{
+  text-align:center;
+  padding:14px 16px;
+  border-bottom:1px solid var(--ink);
+  font-family:var(--sans-en);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  background:var(--bg);
+}
+.issue-strip span{margin:0 12px;color:var(--ink);}
+.issue-strip .dot{
+  display:inline-block;width:3px;height:3px;
+  border-radius:50%;background:var(--ink);
+  vertical-align:middle;margin:0 6px;
+}
+
+/* ============ MAIN ============ */
+.main{padding:32px 0;}
+.section{padding:24px 0 40px;}
+
+/* h2 + hr (POPEYE pattern) */
+.section h2{
+  margin:0 0 16px;
+  font-family:var(--serif-jp);
+  font-size:24px;
+  font-weight:900;
+  line-height:1.4;
+  letter-spacing:.04em;
+  padding:0 16px;
+}
+.section h2 a{
+  display:inline-flex;align-items:baseline;gap:12px;
+}
+.section h2 small{
+  font-family:var(--sans-en);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.32em;
+  color:var(--warm);
+  text-transform:uppercase;
+}
+.section hr{
+  border:0;
+  height:1px;
+  background:var(--ink);
+  margin:0 16px 28px;
+}
+
+/* ============ ROW 1 (POPEYE-style: large featured + sidebar) ============ */
+.row-feat{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:32px;
+  padding:0 16px;
+}
+.feat-card{
+  display:block;
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:var(--ink);
+}
+.feat-img{
+  aspect-ratio:1/1;
+  display:flex;
+  position:relative;
+  overflow:hidden;
+}
+.feat-img.placeholder{
+  background:linear-gradient(135deg,#1A1A1A 0%,#3D3935 100%);
+}
+.feat-img.placeholder::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 20%,rgba(198,107,69,.35) 0%,transparent 60%);
+}
+.feat-img.placeholder::after{
+  content:'';position:absolute;
+  bottom:30%;right:10%;
+  width:60px;height:1px;background:rgba(255,255,255,.5);
+}
+.feat-no{
+  position:absolute;top:24px;left:24px;
+  font-family:'Inter',serif;
+  font-style:italic;
+  font-size:80px;
+  font-weight:300;
+  color:rgba(255,255,255,.85);
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.feat-title-wrap{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  padding:24px;
+  background:linear-gradient(transparent,rgba(0,0,0,.85));
+  color:#fff;
+}
+.feat-attribute{
+  display:inline-block;
+  font-family:var(--sans-en);
+  font-size:10px;font-weight:700;
+  letter-spacing:.28em;
+  background:rgba(255,255,255,.15);
+  padding:5px 10px;
+  border-radius:3px;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.feat-h{
+  font-family:var(--serif-jp);
+  font-size:24px;
+  font-weight:900;
+  line-height:1.45;
+  letter-spacing:.02em;
+  color:#fff;
+  margin-bottom:8px;
+}
+.feat-sub{
+  font-family:var(--serif-jp);
+  font-size:14px;
+  font-weight:400;
+  color:rgba(255,255,255,.85);
+  line-height:1.6;
+}
+
+/* SIDEBAR cards (smaller) */
+.side-list{
+  display:flex;flex-direction:column;
+  gap:16px;
+}
+.side-card{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:16px;
+  align-items:flex-start;
+  cursor:pointer;
+}
+.side-img{
+  aspect-ratio:1/1;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#F2EDE1;
+  position:relative;
+}
+.side-img.coming{
+  background:repeating-linear-gradient(-45deg,#F2EDE1 0,#F2EDE1 8px,#FAFAF7 8px,#FAFAF7 16px);
+}
+.side-img.cover-ink{
+  background:linear-gradient(135deg,#1A1A1A 0%,#3D3935 100%);
+}
+.side-img-no{
+  position:absolute;top:8px;left:10px;
+  font-family:'Inter',serif;
+  font-style:italic;
+  font-size:24px;
+  font-weight:300;
+  color:rgba(255,255,255,.7);
+  line-height:1;
+}
+.side-img.coming .side-img-no{color:rgba(0,0,0,.18);}
+.side-body{padding-top:4px;}
+.side-attr{
+  font-family:var(--sans-en);
+  font-size:9px;font-weight:700;
+  letter-spacing:.28em;
+  color:var(--warm);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.side-h{
+  font-family:var(--serif-jp);
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+  letter-spacing:.02em;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.side-meta{
+  font-size:11px;color:var(--warm);
+}
+
+/* ============ HORIZONTAL CAROUSEL (POPEYE swiper) ============ */
+.carousel{
+  display:flex;gap:16px;
+  padding:0 16px 16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{display:none;}
+.car-card{
+  flex:0 0 calc((100% - 64px) / 5);
+  min-width:200px;
+  scroll-snap-align:start;
+  cursor:pointer;
+}
+.car-img{
+  aspect-ratio:1/1;
+  border-radius:var(--radius);
+  overflow:hidden;
+  position:relative;
+  background:#F2EDE1;
+  margin-bottom:12px;
+}
+.car-img.coming{
+  background:repeating-linear-gradient(-45deg,#F2EDE1 0,#F2EDE1 8px,#FAFAF7 8px,#FAFAF7 16px);
+}
+.car-img.cover-ink{
+  background:linear-gradient(135deg,#1A1A1A 0%,#3D3935 100%);
+}
+.car-img.cover-ink::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 30%,rgba(198,107,69,.3) 0%,transparent 60%);
+}
+.car-img-no{
+  position:absolute;top:12px;left:14px;
+  font-family:'Inter',serif;
+  font-style:italic;
+  font-size:36px;
+  font-weight:300;
+  color:rgba(255,255,255,.85);
+  line-height:1;
+}
+.car-img.coming .car-img-no{color:rgba(0,0,0,.18);}
+.car-img-cap{
+  position:absolute;
+  bottom:14px;left:14px;right:14px;
+  font-family:var(--serif-jp);
+  font-size:12px;
+  font-weight:700;
+  line-height:1.5;
+  color:#fff;
+}
+.car-img.coming .car-img-cap{color:var(--warm);}
+.car-attr{
+  font-family:var(--sans-en);
+  font-size:9px;font-weight:700;
+  letter-spacing:.28em;
+  color:var(--warm);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.car-h{
+  font-family:var(--serif-jp);
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+  letter-spacing:.02em;
+  color:var(--ink);
+}
+
+/* ============ THIS WEEK GRID ============ */
+.tw-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px 16px;
+  padding:0 16px;
+}
+.tw-card{cursor:pointer;}
+.tw-img{
+  aspect-ratio:1/1;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#F2EDE1;
+  margin-bottom:12px;
+  position:relative;
+  display:flex;align-items:flex-end;
+  padding:16px;
+}
+.tw-img.shop{background:linear-gradient(135deg,#3D5A3D 0%,#2A4A2E 100%);}
+.tw-img.event{background:linear-gradient(135deg,#1A1714 0%,#3D3935 100%);}
+.tw-img.news{background:linear-gradient(135deg,#C66B45 0%,#A85738 100%);}
+.tw-img-emoji{
+  font-size:54px;line-height:1;
+  position:absolute;top:24px;right:24px;
+  opacity:.95;
+}
+.tw-img-cap{
+  position:relative;
+  font-family:var(--serif-jp);
+  font-size:13px;font-weight:700;
+  color:#fff;line-height:1.5;
+}
+.tw-attr{
+  font-family:var(--sans-en);
+  font-size:9px;font-weight:700;
+  letter-spacing:.28em;
+  color:var(--warm);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.tw-h{
+  font-family:var(--serif-jp);
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.tw-meta{
+  font-size:11px;color:var(--warm);
+}
+
+/* ============ EDITOR'S NOTE ============ */
+.editor-note{
+  padding:0 16px;
+  max-width:780px;
+}
+.editor-body{
+  font-family:var(--serif-jp);
+  font-weight:500;
+  font-size:18px;
+  line-height:2;
+  letter-spacing:.04em;
+  color:var(--ink);
+  margin-bottom:24px;
+}
+.editor-body em{font-family:var(--serif-jp);font-style:normal;font-weight:900;}
+.editor-sign{
+  display:flex;align-items:center;gap:14px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.editor-sign-name{
+  font-family:var(--serif-jp);
+  font-weight:700;font-size:14px;
+}
+.editor-sign-role{
+  font-size:12px;color:var(--warm);
+}
+.editor-sign-date{
+  margin-left:auto;
+  font-family:var(--sans-en);
+  font-size:11px;letter-spacing:.18em;font-weight:700;
+  color:var(--warm);
+  text-transform:uppercase;
+}
+
+/* ============ TICKER ============ */
+.ticker-wrap{
+  background:var(--ink);
+  color:var(--bg);
+  overflow:hidden;
+  padding:12px 0;
+}
+.ticker-track{
+  display:inline-flex;
+  gap:48px;
+  white-space:nowrap;
+  animation:tick 60s linear infinite;
+}
+.ticker-item{
+  font-family:var(--serif-jp);
+  font-size:12px;
+  font-weight:500;
+  display:inline-flex;align-items:center;gap:12px;
+  letter-spacing:.06em;
+}
+.ticker-item::before{
+  content:'';width:4px;height:4px;border-radius:50%;
+  background:#fff;flex-shrink:0;
+}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============ FOOTER ============ */
+footer{
+  border-top:1px solid var(--ink);
+  padding:48px 0 24px;
+  background:var(--bg);
+}
+.ft-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:32px;
+  padding:0 24px 32px;
+  max-width:1280px;
+  margin:0 auto;
+}
+.ft-brand{
+  font-family:var(--serif-jp);
+  font-weight:900;
+  font-size:32px;
+  letter-spacing:.06em;
+  color:var(--ink);
+}
+.ft-brand small{
+  display:block;
+  font-family:var(--sans-en);
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.4em;
+  color:var(--ink);
+  margin-top:2px;
+  text-transform:uppercase;
+}
+.ft-tagline{
+  font-size:13px;
+  line-height:1.85;
+  color:var(--ink-2);
+  margin-top:14px;
+  max-width:340px;
+}
+.ft-h{
+  font-family:var(--sans-en);
+  font-size:10px;
+  letter-spacing:.32em;
+  font-weight:700;
+  color:var(--ink);
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.ft-list li{margin-bottom:10px;}
+.ft-list a{
+  font-family:var(--serif-jp);
+  font-size:13px;color:var(--ink);
+  font-weight:500;
+}
+.ft-list a:hover{text-decoration:underline;}
+.ft-bottom{
+  padding:16px 24px 0;
+  max-width:1280px;
+  margin:0 auto;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:16px;
+}
+.ft-copy{
+  font-family:var(--sans-en);
+  font-size:11px;
+  color:var(--warm);
+  letter-spacing:.04em;
+}
+.ft-sns{display:flex;gap:18px;}
+.ft-sns a{
+  font-family:var(--sans-en);
+  font-size:10px;letter-spacing:.22em;
+  font-weight:700;
+  color:var(--ink);
+  text-transform:uppercase;
+}
+.ft-sns a:hover{text-decoration:underline;}
+
+/* ============ MOBILE ============ */
+@media (max-width:880px){
+  body{font-size:13px;}
+  .wrapper-large{padding:0 12px;}
+  .header{padding:0 16px;}
+  .header h1{font-size:24px;}
+  .header h1 small{font-size:8px;}
+  .issue-strip{font-size:9px;letter-spacing:.22em;padding:12px 16px;}
+  .issue-strip span{margin:0 4px;}
+  .section h2{font-size:18px;padding:0 12px;}
+  .section hr{margin:0 12px 20px;}
+  .row-feat{grid-template-columns:1fr;gap:24px;padding:0 12px;}
+  .feat-no{font-size:48px;top:16px;left:16px;}
+  .feat-h{font-size:18px;}
+  .feat-sub{font-size:12px;}
+  .feat-title-wrap{padding:18px;}
+  .side-card{grid-template-columns:80px 1fr;gap:12px;}
+  .side-h{font-size:13px;}
+  .carousel{padding:0 12px 16px;gap:12px;}
+  .car-card{flex-basis:calc((100% - 24px) / 2.2);min-width:140px;}
+  .tw-grid{grid-template-columns:1fr 1fr;padding:0 12px;}
+  .tw-img-emoji{font-size:36px;top:16px;right:16px;}
+  .editor-note{padding:0 12px;}
+  .editor-body{font-size:15px;}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:24px;padding:0 16px 24px;}
+  .ft-bottom{padding:16px 16px 0;}
+  .drawer-list .ja{font-size:22px;}
+}
+@media (max-width:560px){
+  .tw-grid{grid-template-columns:1fr;}
+  .ft-grid{grid-template-columns:1fr;}
+  .ft-bottom{flex-direction:column;align-items:flex-start;}
+}
+</style>
+
+<!-- 構造化データ JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"うみまち",
+  "alternateName":"Umimachi Magazine",
+  "url":"https://umi-much.github.io/Umimuch/",
+  "description":"宇美町の魅力ある人を訪ねる雑誌型ウェブメディア。月に2人、町に生きる人をインタビュー。",
+  "inLanguage":"ja",
+  "publisher":{"@type":"Person","name":"後藤堅太郎"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"うみまち",
+  "url":"https://umi-much.github.io/Umimuch/",
+  "logo":"https://umi-much.github.io/Umimuch/ogp.png",
+  "description":"福岡県糟屋郡宇美町の人物起点・雑誌型ウェブメディア",
+  "areaServed":{"@type":"Place","name":"福岡県糟屋郡宇美町"},
+  "sameAs":[
+    "https://twitter.com/umimachiyakuba",
+    "https://www.facebook.com/profile.php?id=100064607023410",
+    "https://www.instagram.com/umi_nstagram/"
+  ]
+}
+</script>
+
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XJ5ZPVRF6B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XJ5ZPVRF6B');
+</script>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <h1>
+    <a href="magazine.html">
+      うみまち
+      <small>Umimachi Magazine</small>
+    </a>
+  </h1>
+  <a href="#" class="nav-trigger" id="nav-trigger" aria-label="メニュー"><span></span></a>
+  <a href="#" class="nav-search" aria-label="検索">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 416.251 416.251">
+      <path d="M251.797 7.584c-87.876 0-159.294 71.417-159.294 159.294 0 40.334 15.177 77.072 39.955 105.158L5.16 396.681l11.724 11.985L144.182 283.99c28.375 26.09 66.094 42.18 107.615 42.18 87.876 0 159.293-71.416 159.293-159.292S339.673 7.584 251.797 7.584zm0 16.768c78.814 0 142.525 63.712 142.525 142.526 0 78.815-63.711 142.525-142.525 142.525S109.27 245.693 109.27 166.878c0-78.814 63.712-142.526 142.526-142.526z"/>
+    </svg>
+  </a>
+</header>
+
+<!-- ============ DRAWER ============ -->
+<aside class="drawer" id="drawer">
+  <ul class="drawer-list">
+    <li><a href="magazine.html"><span class="num">01</span><span class="ja">表紙</span><span class="en">Home</span></a></li>
+    <li><a href="#" data-coming><span class="num">02</span><span class="ja">人</span><span class="en">Interview</span></a></li>
+    <li><a href="#" data-coming><span class="num">03</span><span class="ja">暮らし</span><span class="en">Living</span></a></li>
+    <li><a href="#" data-coming><span class="num">04</span><span class="ja">店・場所</span><span class="en">Places</span></a></li>
+    <li><a href="#" data-coming><span class="num">05</span><span class="ja">つながる</span><span class="en">Connect</span></a></li>
+    <li><a href="index.html"><span class="num">＊</span><span class="ja">旧ポータル</span><span class="en">Archive</span></a></li>
+  </ul>
+</aside>
+
+<!-- ============ ISSUE STRIP ============ -->
+<div class="issue-strip">
+  <span>No. 0</span><span class="dot"></span><span>May 2026</span><span class="dot"></span><span>Relaunch</span><span class="dot"></span><span>月に2人、宇美町の人を訪ねる雑誌</span>
+</div>
+
+<!-- ============ MAIN ============ -->
+<main class="main">
+
+  <!-- ===== Section: 創刊号 ===== -->
+  <section class="section">
+    <div class="wrapper-large">
+      <h2><a href="magazine.html"><b>創刊号</b><small>Issue 00 / Cover Story</small></a></h2>
+      <hr>
+      <div class="row-feat" id="row-feat">
+        <!-- rendered -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section: 人 ===== -->
+  <section class="section">
+    <div class="wrapper-large">
+      <h2><a href="#" data-coming><b>人</b><small>Interview / 全号一覧</small></a></h2>
+      <hr>
+    </div>
+    <div class="carousel" id="carousel-people">
+      <!-- rendered -->
+    </div>
+  </section>
+
+  <!-- ===== Section: 今週のうみまち ===== -->
+  <section class="section">
+    <div class="wrapper-large">
+      <h2><a href="#" data-coming><b>今週のうみまち</b><small>This Week / 編集部のおすすめ</small></a></h2>
+      <hr>
+      <div class="tw-grid" id="tw-grid">
+        <!-- rendered -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Ticker (お知らせ) ===== -->
+  <div class="ticker-wrap" aria-label="町からのお知らせ">
+    <div class="ticker-track" id="ticker-track">
+      <!-- rendered -->
+    </div>
+  </div>
+
+  <!-- ===== Section: 編集後記 ===== -->
+  <section class="section">
+    <div class="wrapper-large">
+      <h2><a href="#"><b>編集後記</b><small>From the Editor</small></a></h2>
+      <hr>
+      <div class="editor-note">
+        <p class="editor-body">
+          「<em>なぜそこまで？</em>」<br>
+          そう聞きたくなる人が、宇美町には、いる。<br><br>
+          月に2人、その人を訪ねます。話を聴き、写真を撮り、その人の偏愛のかたちをそのまま記事にします。
+        </p>
+        <div class="editor-sign">
+          <div>
+            <div class="editor-sign-name">後藤堅太郎</div>
+            <div class="editor-sign-role">うみまち 運営者</div>
+          </div>
+          <div class="editor-sign-date">May 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-brand">うみまち<small>Umimachi Magazine</small></div>
+      <p class="ft-tagline">
+        月に2人、宇美町に生きる人を訪ねる雑誌。<br>
+        ジャンルも肩書きも問わず、「なぜそこまで？」と聞きたくなる人だけを集めて。
+      </p>
+    </div>
+    <div>
+      <h3 class="ft-h">Read</h3>
+      <ul class="ft-list">
+        <li><a href="#" data-coming>人 / Interview</a></li>
+        <li><a href="#" data-coming>暮らし / Living</a></li>
+        <li><a href="#" data-coming>店・場所 / Places</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="ft-h">Connect</h3>
+      <ul class="ft-list">
+        <li><a href="#" data-coming>取材推薦フォーム</a></li>
+        <li><a href="#" data-coming>情報投稿</a></li>
+        <li><a href="https://page.line.me/350gxmje" target="_blank" rel="noopener">LINE</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="ft-h">About</h3>
+      <ul class="ft-list">
+        <li><a href="index.html">旧ポータル</a></li>
+        <li><a href="admin.html">運営管理</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p class="ft-copy">© 2026 うみまち / Issue 00 — Relaunch</p>
+    <div class="ft-sns">
+      <a href="https://www.instagram.com/umi_nstagram/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100064607023410" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/umimachiyakuba" target="_blank" rel="noopener">X</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const FALLBACK = {articles:[],ticker:[],news:[],events:[],shops:[]};
+let DATA = FALLBACK;
+
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.from((r||document).querySelectorAll(s));}
+
+function goArticle(slug){
+  if(!slug)return;
+  if(window.gtag){gtag('event','article_click',{slug:slug});}
+  window.location.href = 'article.html?slug=' + encodeURIComponent(slug);
+}
+
+/* Drawer */
+const tr = $('#nav-trigger'), dr = $('#drawer');
+tr.addEventListener('click',e=>{
+  e.preventDefault();
+  tr.classList.toggle('on');
+  dr.classList.toggle('on');
+  document.body.style.overflow = dr.classList.contains('on') ? 'hidden' : '';
+});
+$$('.drawer a').forEach(a=>a.addEventListener('click',()=>{
+  tr.classList.remove('on');
+  dr.classList.remove('on');
+  document.body.style.overflow = '';
+}));
+
+function bindComing(){
+  $$('[data-coming]').forEach(el=>{
+    el.addEventListener('click',e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      alert('Coming soon — Phase 2 で公開予定です。');
+    });
+  });
+}
+
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s){return escapeHtml(s);}
+function truncate(s,n){return s.length>n?s.slice(0,n)+'…':s;}
+function formatDate(iso){
+  if(!iso)return '';
+  const d = new Date(iso);
+  if(isNaN(d))return iso;
+  const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+  return `${m} ${String(d.getDate()).padStart(2,'0')}, ${d.getFullYear()}`;
+}
+
+/* === 創刊号 === */
+function renderRowFeat(){
+  const root = $('#row-feat');
+  const arts = (DATA.articles||[]).filter(a=>a.status!=='draft');
+  if(!arts.length){root.innerHTML='<p style="color:var(--warm)">記事準備中。</p>';return;}
+  const a = arts[0];
+  /* Sidebar items (coming soon placeholders + future articles) */
+  const sideItems = [
+    {no:'01',attr:'Upcoming',title:'第1号 取材中',meta:'近日公開',coming:true},
+    {no:'02',attr:'Recommend',title:'第2号 準備中',meta:'取材推薦募集中',coming:true},
+    {no:'＊',attr:'Archive',title:'旧ポータル（地域情報）',meta:'店舗・行政・移住情報',coming:false,href:'index.html'}
+  ];
+
+  root.innerHTML = `
+    <a class="feat-card" onclick="goArticle('${escapeAttr(a.slug)}')">
+      <div class="feat-img placeholder">
+        <span class="feat-no">№00</span>
+        <div class="feat-title-wrap">
+          <span class="feat-attribute">${escapeHtml((a.tags&&a.tags[0])||'Interview')}</span>
+          <h3 class="feat-h">${escapeHtml(a.title)}</h3>
+          <p class="feat-sub">${escapeHtml(a.subtitle||'')}</p>
+        </div>
+      </div>
+    </a>
+    <div class="side-list">
+      ${sideItems.map(it=>`
+        <div class="side-card" ${it.coming?'data-coming':it.href?`onclick="location.href='${it.href}'"`:''}>
+          <div class="side-img ${it.coming?'coming':'cover-ink'}">
+            <span class="side-img-no">№${it.no}</span>
+          </div>
+          <div class="side-body">
+            <div class="side-attr">${escapeHtml(it.attr)}</div>
+            <h4 class="side-h">${escapeHtml(it.title)}</h4>
+            <p class="side-meta">${escapeHtml(it.meta)}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+/* === 人 (carousel) === */
+function renderCarousel(){
+  const root = $('#carousel-people');
+  const arts = (DATA.articles||[]).filter(a=>a.status!=='draft');
+  const cards = arts.map((a,i)=>{
+    const num = String(i).padStart(2,'0');
+    return `
+      <div class="car-card" onclick="goArticle('${escapeAttr(a.slug)}')">
+        <div class="car-img cover-ink">
+          <span class="car-img-no">№${num}</span>
+          <p class="car-img-cap">${escapeHtml(a.subtitle||a.title)}</p>
+        </div>
+        <div class="car-attr">Issue ${num} — ${escapeHtml((a.tags&&a.tags[0])||'Interview')}</div>
+        <h4 class="car-h">${escapeHtml(truncate(a.title,28))}</h4>
+      </div>
+    `;
+  });
+  /* Coming Soon placeholders */
+  const placeholders = [
+    {no:'01',attr:'Issue 01 — Upcoming',title:'第1号 取材中'},
+    {no:'02',attr:'Issue 02 — Recommend',title:'第2号 準備中'},
+    {no:'03',attr:'Issue 03 — Soon',title:'第3号 募集中'},
+    {no:'04',attr:'Issue 04 — Soon',title:'第4号 募集中'}
+  ];
+  placeholders.forEach(p=>{
+    cards.push(`
+      <div class="car-card" data-coming>
+        <div class="car-img coming">
+          <span class="car-img-no">№${p.no}</span>
+          <p class="car-img-cap">an interview, soon</p>
+        </div>
+        <div class="car-attr">${escapeHtml(p.attr)}</div>
+        <h4 class="car-h">${escapeHtml(p.title)}</h4>
+      </div>
+    `);
+  });
+  root.innerHTML = cards.join('');
+}
+
+/* === 今週のうみまち === */
+function renderThisWeek(){
+  const root = $('#tw-grid');
+  const items = [];
+  if((DATA.shops||[]).length){
+    const s = DATA.shops[0];
+    items.push({cls:'shop',emoji:s.emoji||'🍴',attr:'Place',title:s.name,meta:`${s.area} · ${s.hours||''}`});
+  }
+  if((DATA.events||[]).length){
+    const e = DATA.events[0];
+    items.push({cls:'event',emoji:'⛩️',attr:'Event',title:e.title,meta:`${e.month} ${e.day} · ${e.place}`});
+  }
+  if((DATA.news||[]).length){
+    const n = DATA.news[0];
+    items.push({cls:'news',emoji:'📢',attr:n.label||'News',title:n.title,meta:`${n.month} ${n.day}`});
+  }
+  /* Add second event/shop if available */
+  if((DATA.shops||[]).length>1){
+    const s = DATA.shops[1];
+    items.push({cls:'shop',emoji:s.emoji||'🍴',attr:'Place',title:s.name,meta:`${s.area} · ${s.hours||''}`});
+  }
+  if((DATA.events||[]).length>1){
+    const e = DATA.events[1];
+    items.push({cls:'event',emoji:'🌸',attr:'Event',title:e.title,meta:`${e.month} ${e.day} · ${e.place}`});
+  }
+  if((DATA.news||[]).length>1){
+    const n = DATA.news[1];
+    items.push({cls:'news',emoji:'📰',attr:n.label||'News',title:n.title,meta:`${n.month} ${n.day}`});
+  }
+  root.innerHTML = items.slice(0,6).map(it=>`
+    <div class="tw-card">
+      <div class="tw-img ${it.cls}">
+        <span class="tw-img-emoji">${it.emoji}</span>
+        <p class="tw-img-cap">${escapeHtml(truncate(it.title,30))}</p>
+      </div>
+      <div class="tw-attr">${escapeHtml(it.attr)}</div>
+      <h4 class="tw-h">${escapeHtml(truncate(it.title,28))}</h4>
+      <p class="tw-meta">${escapeHtml(it.meta)}</p>
+    </div>
+  `).join('');
+}
+
+/* === Ticker === */
+function renderTicker(){
+  const root = $('#ticker-track');
+  const items = (DATA.ticker||[]).map(t=>`<span class="ticker-item">${escapeHtml(t)}</span>`).join('');
+  root.innerHTML = items + items;
+}
+
+/* Scroll depth */
+const sd = {25:false,50:false,75:false,100:false};
+function trackScrollDepth(){
+  const h = document.documentElement;
+  const pct = (h.scrollTop+h.clientHeight)/h.scrollHeight*100;
+  [25,50,75,100].forEach(t=>{
+    if(pct>=t && !sd[t]){
+      sd[t]=true;
+      if(window.gtag){gtag('event','scroll_depth',{depth:t});}
+    }
+  });
+}
+window.addEventListener('scroll',()=>{requestAnimationFrame(trackScrollDepth);},{passive:true});
+
+/* Bootstrap */
+fetch('data.json',{cache:'no-cache'})
+  .then(r=>r.ok?r.json():FALLBACK)
+  .then(d=>{DATA=d;renderAll();})
+  .catch(()=>{DATA=FALLBACK;renderAll();});
+
+function renderAll(){
+  renderRowFeat();
+  renderCarousel();
+  renderThisWeek();
+  renderTicker();
+  bindComing();
+}
+</script>
+</body>
+</html>
